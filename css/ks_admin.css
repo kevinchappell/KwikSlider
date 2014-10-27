@@ -1,0 +1,112 @@
+#ks_meta label {
+  display: block;
+}
+.clear_img {
+  content: "X";
+  color: red;
+  width: 7px;
+  height: 7px;
+}
+#ks_slide_meta .slide_edit .clear_img {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  line-height: 24px;
+  height: 24px;
+  font-size: 20px;
+  text-align: center;
+  width: 24px;
+}
+.learn_more:hover {
+  color: #25BC00;
+}
+#kcdl_box_link_meta {
+  position: relative;
+}
+#kcdl_box_btn_wrap {
+  text-align: center;
+  font-size: 36px;
+  line-height: 36px;
+  height: 36px;
+  width: 100%
+}
+#add_kcdl_box {
+  cursor: pointer;
+}
+#add_box_btn {
+  position: absolute;
+  top: -47px;
+  right: 2px;
+}
+/*   ---------   Create/edit meta   ---------    */
+
+#ks_slide_meta .kf_text_wrap input[type="text"] {
+  display: block;
+  padding: .5em;
+  width: 100%;
+}
+#ks_slide_meta .slide_edit:hover .clear_img {
+  display: inline-block;
+}
+#ks_slide_meta .slide_edit {
+  position: relative;
+}
+#ks_slide_meta .slide_edit .kf_img_wrap {
+  float: left;
+  width: 33%;
+  position: relative;
+}
+#ks_slide_meta .slide_edit .kf_img_wrap .upload_img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-radius: .5em 0 0 0;
+  border: 0 none;
+  padding: .5em;
+}
+#ks_slide_meta .slide_edit .img_prev {
+  min-height: 229px;
+  background: url("images/no_image.gif") no-repeat 50% 46%;
+  border: 0 none;
+  width: 100%;
+}
+#ks_slide_meta .slide_edit .slide_details {
+  float: left;
+  margin-left: 1%;
+  width: 65%;
+}
+#ks_slide_meta .slide_edit .slide_details .subtitle {
+  font-weight: normal;
+  color: #9c9c9c;
+  margin: 0;
+  padding-left: 0;
+  width: 60%;
+}
+#ks_slide_meta .slide_edit .slide_details .learn_more {
+  color: #44A033;
+  font-weight: bold;
+  width: 33%;
+}
+/*----------TOOLBAR----------*/
+#ks_slide_meta .ks_slide_toolbar{
+    float:right;
+    width:auto;
+}
+
+#ks_slide_meta .ks_slide_toolbar span {
+  display: inline-block;
+  float: left;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  padding: 0.1em;
+  border-radius: 0.1em;
+  text-align: center;
+  margin-left: 0.1em;
+  cursor:pointer;
+}
+#ks_slide_meta .ks_slide_toolbar span.move_slide {
+  line-height: .6em
+}
