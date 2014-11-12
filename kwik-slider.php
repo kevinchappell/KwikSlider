@@ -38,11 +38,12 @@ function home_slide_cpt_init() {
 			'title',
 			// 'editor',
 			// 'author',
-			'thumbnail'
+			// 'thumbnail'
 		),
 		'public' => true,
 		'exclude_from_search' => true,
-		'has_archive' => false
+		'has_archive' => false,
+    'rewrite' => array( 'slug' => 'kwik-slider' )
 	));
 
   register_post_type('ks_slide', array(
@@ -61,7 +62,7 @@ function home_slide_cpt_init() {
       'author',
       'thumbnail'
     ),
-    'show_ui' => false,
+    'show_ui' => true,
     'public' => true,
     'exclude_from_search' => true,
     'has_archive' => false
