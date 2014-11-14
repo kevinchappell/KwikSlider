@@ -52,11 +52,13 @@
 }
 #ks_slide_meta .slide_edit {
   position: relative;
+  padding:5px;
 }
 #ks_slide_meta .slide_edit .kf_img_wrap {
   float: left;
   width: 33%;
   position: relative;
+  margin-bottom:0;
 }
 #ks_slide_meta .slide_edit .kf_img_wrap .upload_img {
   position: absolute;
@@ -104,6 +106,7 @@
   text-align: center;
   margin-left: 0.1em;
   cursor:pointer;
+  background-color:#fff;
 }
 #ks_slide_meta .ks_slide_toolbar span.move_slide {
   line-height: .6em

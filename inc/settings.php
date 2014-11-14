@@ -2,22 +2,15 @@
 add_action( 'admin_menu', 'ks_add_admin_menu' );
 add_action( 'admin_init', 'ks_settings_init' );
 
-
-
 function ks_add_admin_menu(  ) {
-
   add_submenu_page( 'edit.php?post_type=kwik_slider', __('Kwik Slider Settings', 'kwik'), __('Settings', 'kwik'), 'manage_options', 'kwik_slider', KS_PLUGIN_SETTINGS );
-
 }
 
-
-
-function ks_settings_init(  ) {
+function ks_settings_init() {
   $utils = new KwikUtils();
   $defaultSettings = ks_default_options();
   $utils->settings_init(KS_PLUGIN_BASENAME, KS_PLUGIN_SETTINGS, $defaultSettings);
 }
-
 
 function kwik_slider_settings() {
   $utils = new KwikUtils();
@@ -74,17 +67,19 @@ function ks_default_options() {
   $ks_default_options = array(
     'general' => array(
       'section_title' => __('General', 'kwik'),
-      'section_desc' => __('Set the main options for the KwikTheme website here.', 'kwik'),
+      'section_desc' => __('Set the default options for the Kwik Slider here. Many settings can be overriden on the slider edit page.', 'kwik'),
       'settings' => array(
         'transition_speed' => array(
-          'type' => 'text',
+          'type' => 'spinner',
           'title' => __('Transition Speed', 'kwik'),
-          'value' => '750'
+          'value' => '750',
+          'attrs' => array('min'=>'0', 'max'=>'9001')
         ),
         'transition_delay' => array(
-          'type' => 'text',
+          'type' => 'spinner',
           'title' => __('Transition Delay', 'kwik'),
-          'value' => '3000'
+          'value' => '3000',
+          'attrs' => array('min'=>'0', 'max'=>'9001')
         ),
         'transition_effect' => array(
           'type' => 'select',
@@ -95,5 +90,6 @@ function ks_default_options() {
       )
     )
   );
+
   return apply_filters('ks_default_options', $ks_default_options);
 }

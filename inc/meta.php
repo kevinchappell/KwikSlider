@@ -2,7 +2,7 @@
 
 // Add the kwik slider meta box
 function add_ks_metaboxes() {
-  add_meta_box('ks_meta', 'Slide Details', 'ks_meta', 'kwik_slider', 'side', 'default');
+  add_meta_box('ks_meta', 'Slider Settings', 'ks_meta', 'kwik_slider', 'side', 'default');
   add_meta_box('ks_slides', 'Slides', 'ks_slides', 'kwik_slider', 'normal', 'core');
 }
 
@@ -10,19 +10,24 @@ function add_ks_metaboxes() {
 function ks_meta() {
   global $post;
   $inputs = new KwikInputs();
+  $options = ks_get_options();
+  $defaults = ks_default_options();
+
+  $ks_meta = '';
 
   // Noncename for security check on data origin
   $ks_meta .= $inputs->nonce(KS_PLUGIN_BASENAME.'_nonce', wp_create_nonce(plugin_basename(__FILE__)));
 
   // Get the current data
-  $ks_slide_link = get_post_meta($post->ID, 'ks_slide_link', true);
-  $ks_slide_link_target = get_post_meta($post->ID, 'ks_slide_link_target', true);
-  $ks_learn_more = get_post_meta($post->ID, 'ks_learn_more', true);
+  $ks_slider_settings = get_post_meta($post->ID, '_ks_slider_settings')[0];
 
-  // meta fields
-  $ks_meta = $inputs->text('ks_slide_link', $ks_slide_link, __('Link', 'kwik'));
-  $ks_meta .= $inputs->select('ks_slide_link_target', $ks_slide_link_target, $inputs->target(), __('Target'));
-  $ks_meta .= $inputs->text('ks_learn_more', $ks_learn_more, __('Learn More Text', 'kwik'));
+  $ks_slider_fx = $ks_slider_settings[fx] ? $ks_slider_settings[fx] : $options['transition_effect'];
+  $ks_slider_speed = $ks_slider_settings[speed] ? $ks_slider_settings[speed] : $options['transition_speed'];
+  $ks_slider_delay = $ks_slider_settings[delay] ? $ks_slider_settings[delay] : $options['transition_delay'];
+
+  $ks_meta .= $inputs->select('ks_slider_settings[fx]', $ks_slider_fx, $defaults['general']['settings']['transition_effect']['options'], __('Effect', 'kwik'));
+  $ks_meta .= $inputs->spinner('ks_slider_settings[speed]', $ks_slider_speed, __('Speed', 'kwik'), array('max'=>'2000', 'min'=>'0'));
+  $ks_meta .= $inputs->spinner('ks_slider_settings[delay]', $ks_slider_delay, __('Delay', 'kwik'), array('max'=>'12000', 'min'=>'0'));
   echo $ks_meta;
 }
 
@@ -33,8 +38,6 @@ function ks_slides() {
   $inputs = new KwikInputs();
   $kwik_slides = get_post_meta($post->ID, '_ks_slides', false);
   $kwik_slides = $kwik_slides[0];
-
-  // var_dump($kwik_slides);
 
   $output = '';
   // Noncename for security check on data origin
@@ -48,7 +51,7 @@ function ks_slides() {
     }
   } else {
     $output .= get_slide_inputs();
-  }// is_array
+  }
 
   echo  $output;
 }
@@ -91,10 +94,10 @@ function get_slide_inputs($slide_id = NULL){
 function get_slide_toolbar(){
   $inputs = new KwikInputs();
   $buttons = array(
-    'move_slide'   => $inputs->markup('span', '&varr;',     array('class'=>'move_slide', 'title'=> __('Re-order Slide', 'kwik'))),
-    'clone_slide'  => $inputs->markup('span', '',           array('class'=>'clone_slide dashicons-plus', 'title'=>__('Clone Slide', 'kwik'))),
     'remove_slide' => $inputs->markup('span', '',           array('del-confirm' => __('Remove slide?', 'kwik'), 'class'=>'remove_slide dashicons-trash', 'title'=>__('Remove Slide', 'kwik'))),
-    'save_slide'   => $inputs->markup('span', '', array('class'=>'dashicons-yes save_slide', 'title'=>__('Save Slide', 'kwik')))
+    'clone_slide'  => $inputs->markup('span', '',           array('class'=>'clone_slide dashicons-admin-page', 'title'=>__('Clone Slide', 'kwik'))),
+    'move_slide'   => $inputs->markup('span', '&varr;',     array('class'=>'move_slide', 'title'=> __('Re-order Slide', 'kwik'))),
+    // 'save_slide'   => $inputs->markup('span', '', array('class'=>'dashicons-yes save_slide', 'title'=>__('Save Slide', 'kwik')))
     );
 
   return $inputs->markup('div', $buttons, array('class'=>'ks_slide_toolbar dashicons'));
@@ -118,10 +121,9 @@ function save_ks_meta($post_id, $post) {
       $slide_ids = $_POST[KS_PREFIX.'slide_id'];
 
       //TODO add meta validation
-
       $ks_slides = array(
         '_ks_slides' => $slide_ids,
-        '_ks_slider_settings' => wp_filter_nohtml_kses($_POST['ks_slider_settings'])
+        '_ks_slider_settings' => $_POST['ks_slider_settings']
       );
 
       // Add values of $ks_slides as custom fields
