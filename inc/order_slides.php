@@ -5,7 +5,7 @@ function home_slide_order_page() {
   ?>
 <div class="wrap">
 
-    <h2>Sort Home Page Slides</h2>
+    <h2><?php _e('Sort Home Page Slides', 'kwik')?></h2>
 
     <p>Simply drag the slide up or down and they will be saved in that order.</p>
 

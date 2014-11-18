@@ -1,27 +1,23 @@
 <?php
-
-<?php
 /**
- * Widget Name: Kwik Contact Widget
- * Description: A tiny contact form block
- * Version: 0.2
+ * Widget Name: Kwik Slider
+ * Description: The Kwik Slider Widget
+ * Version: 0.1
  *
  */
 
-add_action( 'widgets_init', 'ks_contact_load_widgets' );
+add_action( 'widgets_init', 'ks_load_widget' );
 
-function ks_contact_load_widgets() {
-  register_widget( 'KF_Contact_Widget' );
+function ks_load_widget() {
+  register_widget( 'KS_Slider_Widget' );
 }
 
-
-
-class KF_Contact_Widget extends WP_Widget {
+class KS_Slider_Widget extends WP_Widget {
 
   function __construct() {
-    $widget_ops = array('classname' => 'contact_widget', 'description' => __('Mini Contact Form'));
-    $control_ops = array('width' => 400, 'height' => 350);
-    parent::__construct('contact', __('Contact'), $widget_ops, $control_ops);
+    $widget_ops = array('classname' => 'slider_widget', 'description' => __('Kwik Sldiers for your sidebars'));
+    $control_ops = array('height' => 350, 'id_base' => 'kwik_slider' );
+    parent::__construct('kwik_slider', __('Kwik Slider'), $widget_ops, $control_ops);
   }
 
   function widget( $args, $instance ) {
@@ -39,15 +35,15 @@ class KF_Contact_Widget extends WP_Widget {
     $form = '';
     $slider = '';
     $slider .= '
-    <div class="cycle-slideshow" 
-      data-cycle-fx="<?php echo $options['home_slider']['fx']?>"
-      data-cycle-speed=<?php echo $options['home_slider']['speed']?>
-      data-cycle-timeout=<?php echo $options['home_slider']['delay']?>
+    <div class="cycle-slideshow"
+      data-cycle-fx="<?php echo $options[\'home_slider\'][\'fx\']?>"
+      data-cycle-speed=<?php echo $options[\'home_slider\'][\'speed\']?>
+      data-cycle-timeout=<?php echo $options[\'home_slider\'][\'delay\']?>
       data-cycle-auto-height=container
       data-cycle-swipe=true
       data-cycle-slides="div.slide"
       >';
-    $form .= '<form id="ks_contact_widget" name="ks_contact_widget" method="post" enctype="multipart/form-data" action="'.get_bloginfo('template_directory').'/forms/widget_form_processor.php" >';
+    $form .= '<form id="ks_slider_widget" name="ks_slider_widget" method="post" enctype="multipart/form-data" action="'.get_bloginfo('template_directory').'/forms/widget_form_processor.php" >';
     $form .= '<input type="text" class="text_field" name="user_name" placeholder="'.__('Name','op').'" id="user_name" />';
     $form .= '<input type="text" class="text_field" name="user_phone" placeholder="'.__('Phone','op').'" id="user_phone" />';
     $form .= '<input type="text" class="text_field" name="user_email" placeholder="'.__('Email','op').'" id="user_email" />';
@@ -78,28 +74,18 @@ class KF_Contact_Widget extends WP_Widget {
   }
 
   function form( $instance ) {
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'text' => '', 'conf_message' => 'Thank you for your submission', 'to_email' => get_option('admin_email'), 'cc_email' => '', 'error_message' => 'There was an error submitting your message', 'success_message' => 'Your message was successfully sent.' ) );
-    $title = $instance['title'];
-    $to_email = $instance['to_email'];
-    $cc_email = $instance['cc_email'];
-    $conf_message = esc_textarea($instance['conf_message']);
-    $error_message = esc_textarea($instance['error_message']);
-    $success_message = esc_textarea($instance['success_message']);
-?>
-    <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
-    <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></p>
+    $inputs = new KwikInputs();
+    $output = '';
 
-        <p><label for="<?php echo $this->get_field_id('to_email'); ?>"><?php _e('To Email:'); ?></label>
-        <input class="widefat" id="<?php echo $this->get_field_id('to_email'); ?>" name="<?php echo $this->get_field_name('to_email'); ?>" type="text" value="<?php echo esc_attr($to_email); ?>" /></p>
+    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'slider' => '' ) );
 
-        <p><label for="<?php echo $this->get_field_id('cc_email'); ?>"><?php _e('CC Email:'); ?></label>
-        <input class="widefat" id="<?php echo $this->get_field_id('cc_email'); ?>" name="<?php echo $this->get_field_name('cc_email'); ?>" type="text" value="<?php echo esc_attr($cc_email); ?>" /></p>
+    $output .= $inputs->text($this->get_field_name('title'), $instance['title'], __('Title:', 'kwik'), array("id" => $this->get_field_id('title'), "class" => "widefat"));
+    $output .= $inputs->text($this->get_field_name('slider'), $instance['slider'], __('Slider:', 'kwik'), array("id" => $this->get_field_id('slider'), "class" => "widefat ks_ac"));
+    // $preview = $inputs->markup('span', )
+    $output .= $inputs->markup('div', NULL, array('class'=>'slider_preview'));
 
-    <textarea class="widefat" rows="4" cols="20" id="<?php echo $this->get_field_id('conf_message'); ?>" name="<?php echo $this->get_field_name('conf_message'); ?>"><?php echo $conf_message; ?></textarea>
-        <textarea class="widefat" rows="4" cols="20" id="<?php echo $this->get_field_id('error_message'); ?>" name="<?php echo $this->get_field_name('error_message'); ?>"><?php echo $error_message; ?></textarea>
-        <textarea class="widefat" rows="4" cols="20" id="<?php echo $this->get_field_id('success_message'); ?>" name="<?php echo $this->get_field_name('success_message'); ?>"><?php echo $success_message; ?></textarea>
+    echo $output;
 
-<?php
   }
 }
 

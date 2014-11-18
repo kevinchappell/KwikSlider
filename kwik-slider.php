@@ -4,7 +4,7 @@ Plugin Name: Kwik Slider
 Plugin URI: http://kevin-chappell.com/kwik-slider
 Description: A slide show plugin perfect for homepage sliders
 Author: Kevin Chappell
-Version: 1.1
+Version: .1
 Author URI: http://kevin-chappell.com
  */
 
@@ -19,10 +19,12 @@ define('KS_PREFIX', 'ks_' );
 foreach (glob(KS_PLUGIN_PATH . "/inc/*.php") as $inc_filename) {
   include $inc_filename;
 }
+foreach (glob(KS_PLUGIN_PATH . "/widgets/*.php") as $inc_filename) {
+  include $inc_filename;
+}
 
-
-add_action('init', 'home_slide_cpt_init');
-function home_slide_cpt_init() {
+add_action('init', 'ks_cpt_init');
+function ks_cpt_init() {
 	register_post_type('kwik_slider', array(
 		'labels' => array(
 			'name' => __('Kwik Sliders', 'kwik'),
@@ -92,14 +94,19 @@ function ks_admin_js_css($hook) {
 	// Check screen hook and current post type
 	if (in_array($screen->post_type, $post_types_array)) {
 		wp_enqueue_script('jquery-ui-sortable');
-		wp_enqueue_script('kwik-slider-js', KS_PLUGIN_URL . '/js/' . KS_PREFIX . 'admin.js', array('jquery', 'jquery-ui-sortable'), NULL, true);
-    wp_enqueue_style('kwik-slider-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'admin.css', false, '2014-10-28');
-
-	} elseif ('edit.php' == $hook && 'kwik_slider' == $screen->post_type) {
-
+    wp_enqueue_script('ks-admin-edit-js', KS_PLUGIN_URL . '/js/' . KS_PREFIX . 'admin.js', array('jquery', 'jquery-ui-sortable'), NULL, true);
+    wp_enqueue_style('ks-admin-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'admin.css', false, '2014-10-28');
+  } elseif ('widgets.php' == $hook ) {
+		wp_enqueue_script('ks-admin-widgets-js', KS_PLUGIN_URL . '/js/' . KS_PREFIX . 'widgets_admin.js', array('jquery'), NULL, true);
 	}
 }
 add_action('admin_enqueue_scripts', 'ks_admin_js_css');
+
+
+function js_utils_path(){
+  echo '<span style="display:none;" id="ks_js_utils_path">'.KS_PLUGIN_URL.'/utils</span>';
+}
+add_action('admin_head', 'js_utils_path');
 
 
 /**

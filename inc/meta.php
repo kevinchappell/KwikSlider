@@ -12,7 +12,6 @@ function ks_meta() {
   $inputs = new KwikInputs();
   $options = ks_get_options();
   $defaults = ks_default_options();
-
   $ks_meta = '';
 
   // Noncename for security check on data origin
@@ -25,9 +24,10 @@ function ks_meta() {
   $ks_slider_speed = $ks_slider_settings[speed] ? $ks_slider_settings[speed] : $options['transition_speed'];
   $ks_slider_delay = $ks_slider_settings[delay] ? $ks_slider_settings[delay] : $options['transition_delay'];
 
-  $ks_meta .= $inputs->select('ks_slider_settings[fx]', $ks_slider_fx, $defaults['general']['settings']['transition_effect']['options'], __('Effect', 'kwik'));
+  $ks_meta .= $inputs->select('ks_slider_settings[fx]', $ks_slider_fx, $defaults['behavior']['settings']['transition_effect']['options'], __('Effect', 'kwik'));
   $ks_meta .= $inputs->spinner('ks_slider_settings[speed]', $ks_slider_speed, __('Speed', 'kwik'), array('max'=>'2000', 'min'=>'0'));
   $ks_meta .= $inputs->spinner('ks_slider_settings[delay]', $ks_slider_delay, __('Delay', 'kwik'), array('max'=>'12000', 'min'=>'0'));
+
   echo $ks_meta;
 }
 
@@ -43,8 +43,6 @@ function ks_slides() {
   // Noncename for security check on data origin
   $output .= $inputs->nonce(KS_PLUGIN_BASENAME.'_nonce', wp_create_nonce(plugin_basename(__FILE__)));
 
-  $output .= '<ul id="ks_slide_meta" class="kf_form clear" ks-location="'.KS_PLUGIN_URL.'">';
-
   if(!empty($kwik_slides)){
     foreach ($kwik_slides as $kwik_slide_id){
       $output .= get_slide_inputs($kwik_slide_id);
@@ -53,7 +51,7 @@ function ks_slides() {
     $output .= get_slide_inputs();
   }
 
-  echo  $output;
+  echo  $inputs->markup('ul', $output, array("id"=>KS_PREFIX."slide_meta", "class" => "kf_form clear", "ks-location" => KS_PLUGIN_URL));
 }
 
 function get_slide_inputs($slide_id = NULL){

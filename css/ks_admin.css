@@ -1,3 +1,6 @@
+#ks_js_utils_path{
+  display:none;
+}
 #ks_meta label {
   display: block;
 }
@@ -125,11 +128,14 @@
 }
 
 #ks_slide_meta .slide_footer .slide_messages {
-  display: none;
+  /*display: none;*/
   box-sizing: border-box;
   overflow: hidden;
   padding-right: 10px;
   text-align:center;
   line-height:2em;
   color:#006017;
+}
+#ks_slide_meta .slide_footer .slide_messages.error {
+  color:#9C0000;
 }

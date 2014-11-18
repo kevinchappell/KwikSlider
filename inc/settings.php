@@ -64,9 +64,20 @@ function ks_default_options() {
     'zoom' => __('Zoom', 'kwik')
   );
 
+  $themes = array(
+  'katrina' => 'Katrina',
+  'kevin' => 'Kevin'
+  );
+
+  $pagers = array(
+  'circle' => 'Circle',
+  'square' => 'Square',
+  'thumbnail' => 'Thumbnail'
+  );
+
   $ks_default_options = array(
-    'general' => array(
-      'section_title' => __('General', 'kwik'),
+    'behavior' => array(
+      'section_title' => __('Behavior', 'kwik'),
       'section_desc' => __('Set the default options for the Kwik Slider here. Many settings can be overriden on the slider edit page.', 'kwik'),
       'settings' => array(
         'transition_speed' => array(
@@ -87,6 +98,29 @@ function ks_default_options() {
           'value' => 'fade',
           'options' => $effects
         )
+      )
+    ),
+    'appearance' => array(
+      'section_title' => __('Appearance', 'kwik'),
+      'section_desc' => __('Set default theme and colors.', 'kwik'),
+      'settings' => array(
+        'theme' => array(
+          'type' => 'select',
+          'title' => __('Default Theme', 'kwik'),
+          'value' => 'Katrina',
+          'options' => $themes
+        ),
+        'pager_style' => array(
+          'type' => 'select',
+          'title' => __('Pager Style', 'kwik'),
+          'value' => 'circle',
+          'options' => $pagers
+        ),
+        'pager_color' => array(
+          'type' => 'color',
+          'title' => __('Pager Color', 'kwik'),
+          'value' => '#ffffff'
+        ),
       )
     )
   );

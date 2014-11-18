@@ -7,14 +7,6 @@
 
     global $wpdb;
 
-    // for dev, remove from production
-    // $servername = "localhost";
-    // $username = "kevin_db";
-    // $password = "1avamarie";
-
-    // Create connection
-    // $conn = mysqli_connect($servername, $username, $password);
-
     $input = $term;
     $data = array();
     $table_name = $wpdb->prefix."posts";
@@ -27,12 +19,8 @@
     $query .= "ORDER BY post_title\n";
     $query .= "LIMIT 10";
 
-
-
-    // $query_results = mysql_query($query);
     $query_results = $wpdb->get_results($query, OBJECT);
 
-    // $query_results = $conn->query('SELECT * FROM "kbc_posts" LIMIT 0 , 30');
     foreach ($query_results as $result) {
 
       $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($row['slide_id']), 'thumbnail' );
