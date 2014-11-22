@@ -1,0 +1,14 @@
+/*        ---------   WIDGETS    ---------       */
+.slider_preview_wrap{
+  position:relative;
+}
+
+.slider_preview_wrap .hide{
+  display:none;
+}
+
+.slider_preview_wrap img {
+  width:100%;
+  height:auto;
+}
+
