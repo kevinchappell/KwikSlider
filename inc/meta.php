@@ -2,12 +2,13 @@
 
 // Add the kwik slider meta box
 function add_ks_metaboxes() {
-  add_meta_box('ks_meta', 'Slider Settings', 'ks_meta', 'kwik_slider', 'side', 'default');
+  add_meta_box('slider_settings', 'Slider Settings', 'slider_settings', 'kwik_slider', 'side', 'default');
+  add_meta_box('pager_settings', 'Pager Settings', 'pager_settings', 'kwik_slider', 'side', 'default');
   add_meta_box('ks_slides', 'Slides', 'ks_slides', 'kwik_slider', 'normal', 'core');
 }
 
 // Slider settings for themes, colors and other settings
-function ks_meta() {
+function slider_settings() {
   global $post;
   $inputs = new KwikInputs();
   $options = ks_get_options();
@@ -22,13 +23,41 @@ function ks_meta() {
 
   $ks_slider_fx = $ks_slider_settings[fx] ? $ks_slider_settings[fx] : $options['transition_effect'];
   $ks_slider_speed = $ks_slider_settings[speed] ? $ks_slider_settings[speed] : $options['transition_speed'];
-  $ks_slider_delay = $ks_slider_settings[delay] ? $ks_slider_settings[delay] : $options['transition_delay'];
+  $ks_slider_timeout = $ks_slider_settings[timeout] ? $ks_slider_settings[timeout] : $options['transition_timeout'];
+  $ks_slider_theme = $ks_slider_settings[theme] ? $ks_slider_settings[theme] : $options['theme'];
 
-  $ks_meta .= $inputs->select('ks_slider_settings[fx]', $ks_slider_fx, $defaults['behavior']['settings']['transition_effect']['options'], __('Effect', 'kwik'));
+  $ks_meta .= $inputs->select('ks_slider_settings[fx]', $ks_slider_fx, __('Effect', 'kwik'), NULL, $defaults['behavior']['settings']['transition_effect']['options']);
   $ks_meta .= $inputs->spinner('ks_slider_settings[speed]', $ks_slider_speed, __('Speed', 'kwik'), array('max'=>'2000', 'min'=>'0'));
-  $ks_meta .= $inputs->spinner('ks_slider_settings[delay]', $ks_slider_delay, __('Delay', 'kwik'), array('max'=>'12000', 'min'=>'0'));
+  $ks_meta .= $inputs->spinner('ks_slider_settings[timeout]', $ks_slider_timeout, __('Delay', 'kwik'), array('max'=>'12000', 'min'=>'0'));
+  $ks_meta .= $inputs->select('ks_slider_settings[theme]', $ks_slider_theme, __('Theme', 'kwik'), NULL, $defaults['appearance']['settings']['theme']['options']);
 
   echo $ks_meta;
+}
+
+function pager_settings() {
+  global $post;
+  $inputs = new KwikInputs();
+  $options = ks_get_options();
+  $defaults = ks_default_options();
+  $output = '';
+
+  // Noncename for security check on data origin
+  $output .= $inputs->nonce(KS_PLUGIN_BASENAME.'_nonce', wp_create_nonce(plugin_basename(__FILE__)));
+
+  // Get the current data
+  $ks_pager_settings = get_post_meta($post->ID, '_ks_pager_settings')[0];
+
+  $ks_pager_style = $ks_pager_settings[style] ? $ks_pager_settings[style] : $options['pager_style'];
+  $ks_pager_speed = $ks_pager_settings[fx] ? $ks_pager_settings[fx] : $options['transition_fx'];
+  $ks_pager_position = $ks_pager_settings[position] ? $ks_pager_settings[position] : $options['pager_position'];
+  $ks_pager_theme = $ks_pager_settings[pager_size] ? $ks_pager_settings[pager_size] : $options['pager_size'];
+
+  $output .= $inputs->select('ks_slider_settings[style]', $ks_pager_style, __('Type', 'kwik'), NULL, $defaults['appearance']['settings']['pager_style']['options']);
+  $output .= $inputs->spinner('ks_slider_settings[fx]', $ks_pager_speed, __('Speed', 'kwik'), array('max'=>'2000', 'min'=>'0'));
+  $output .= $inputs->spinner('ks_slider_settings[position]', $ks_pager_position, __('Position', 'kwik'), array('max'=>'12000', 'min'=>'0'));
+  $output .= $inputs->select('ks_slider_settings[pager_size]', $ks_pager_theme, __('Theme', 'kwik'), NULL, $defaults['appearance']['settings']['theme']['options']);
+
+  echo $output;
 }
 
 // Drag and drop slide configuration for `kwik_slider` post type
@@ -36,7 +65,7 @@ function ks_meta() {
 function ks_slides() {
   global $post;
   $inputs = new KwikInputs();
-  $kwik_slides = get_post_meta($post->ID, '_ks_slides', false);
+  $kwik_slides = get_post_meta($post->ID, '_ks_slides');
   $kwik_slides = $kwik_slides[0];
 
   $output = '';

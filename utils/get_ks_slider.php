@@ -24,21 +24,13 @@
 
     foreach ($query_results as $result) {
 
-      $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($row['slider_id']), 'thumbnail' );
-
       $json = array();
       $json['label'] =        $result->name;
       $json['id'] =           $result->slider_id;
-      // $json['subtitle'] =     get_post_meta($result->slider_id, "_slide_subtitle", true);
-      // $json['learn_more'] =   get_post_meta($result->slider_id, "_slide_learnmore", true);
-      // $json['link'] =         get_post_meta($result->slider_id, "_slide_link", true);
-      // $json['thumbnail_id'] = get_post_thumbnail_id( $result->slider_id );
+      $json['theme'] =        get_post_meta($result->slider_id, "_ks_slider_settings")[0][theme];
+      $json['slide_count'] =  sizeof(get_post_meta($result->slider_id, "_ks_slides")[0]);
 
-
-      // var_dump($json['thumbnail_id']);
-
-      $json['thumbnail'] =    getThumbnail($result->slider_id);
-// var_dump($json);
+      $json['thumbna  il'] =    KS_MISC::getSliderThumb($result->slider_id);
       $data[] = $json;
     }
 
@@ -50,18 +42,3 @@
   if($_GET['term'] && current_user_can('edit_pages')){
     ks_slide_autocompleter($_GET['term']);
   }
-
-
-function getThumbnail($slider_id, $slide_index = 0){
-  // var_dump($slider_id);
-  $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($slider_id), 'thumbnail' );
-  if($thumb){
-    return $thumb[0];
-  } else {
-    $kwik_slides = get_post_meta($slider_id, '_ks_slides', false)[0];
-    $slide_id = intval($kwik_slides[$slide_index]);
-    $index = $slide_index+1;
-    $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($slide_id), 'thumbnail' );
-    return getThumbnail($slide_id, $index);
-  }
-}

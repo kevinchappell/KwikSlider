@@ -72,7 +72,8 @@
   padding: .5em;
 }
 #ks_slide_meta .slide_edit .img_prev {
-  min-height: 229px;
+  /*min-height: 229px;*/
+  height: auto;
   background: url("../images/no_image.gif") no-repeat 50% 46%;
   width: 100%;
 }

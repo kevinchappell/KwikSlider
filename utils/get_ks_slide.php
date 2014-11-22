@@ -23,7 +23,7 @@
 
     foreach ($query_results as $result) {
 
-      $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($row['slide_id']), 'thumbnail' );
+      $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($result->slide_id), 'thumbnail' );
 
       $json = array();
       $json['label'] = $result->name;

@@ -26,37 +26,11 @@ class KS_Slider_Widget extends WP_Widget {
     echo $before_widget;
 
     $title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
-    $success = apply_filters( 'widget_success', empty( $instance['success_message'] ) ? '' : $instance['success_message'], $instance );
-    $error = apply_filters( 'widget_error', empty( $instance['error_message'] ) ? '' : $instance['error_message'], $instance );
 
     if(!empty($title)) echo $before_title . $title . $after_title;
+    $slider = get_slider($instance['slider_id']);
 
-
-    $form = '';
-    $slider = '';
-    $slider .= '
-    <div class="cycle-slideshow"
-      data-cycle-fx="<?php echo $options[\'home_slider\'][\'fx\']?>"
-      data-cycle-speed=<?php echo $options[\'home_slider\'][\'speed\']?>
-      data-cycle-timeout=<?php echo $options[\'home_slider\'][\'delay\']?>
-      data-cycle-auto-height=container
-      data-cycle-swipe=true
-      data-cycle-slides="div.slide"
-      >';
-    $form .= '<form id="ks_slider_widget" name="ks_slider_widget" method="post" enctype="multipart/form-data" action="'.get_bloginfo('template_directory').'/forms/widget_form_processor.php" >';
-    $form .= '<input type="text" class="text_field" name="user_name" placeholder="'.__('Name','op').'" id="user_name" />';
-    $form .= '<input type="text" class="text_field" name="user_phone" placeholder="'.__('Phone','op').'" id="user_phone" />';
-    $form .= '<input type="text" class="text_field" name="user_email" placeholder="'.__('Email','op').'" id="user_email" />';
-    $form .= '<textarea placeholder="'.__('Message','op').'" name="user_message"></textarea>';
-    $form .= '<input type="hidden" name="url_main" value="'. currentPageURL() .'" />';
-        $form .= '<input type="hidden" name="user_ip" value="'. getRealIp() .'" />';
-    $form .= '<div class="inner"><span class="arrow"></span><input type="submit" name="user_submit" id="user_submit" value="'.__('Submit','op').'"></div>';
-    $form .= '</form>';
-    $form .= '<div id="ks_contact_error" class="form_message error_message">'.__($error,'op').'</div>';
-    $form .= '<div id="ks_contact_success" class="form_message success_message">'.__($success,'op').'</div>';
-    $form .= '<div id="ks_contact_warning" class="form_message warning_message"></div>';
-
-    echo $form;
+    echo $slider;
 
     echo $after_widget;
   }
@@ -64,28 +38,47 @@ class KS_Slider_Widget extends WP_Widget {
   function update( $new_instance, $old_instance ) {
     $instance = $old_instance;
     $instance['title'] = $new_instance['title'];
-    $instance['to_email'] = $new_instance['to_email'];
-    $instance['cc_email'] = $new_instance['cc_email'];
-    $instance['conf_message'] = stripslashes( wp_filter_post_kses( addslashes($new_instance['conf_message']) ) ); // wp_filter_post_kses() expects slashed
-    $instance['error_message'] = stripslashes( wp_filter_post_kses( addslashes($new_instance['error_message']) ) );
-    $instance['success_message'] = stripslashes( wp_filter_post_kses( addslashes($new_instance['success_message']) ) );
+    $instance['slider_id'] = strip_tags($new_instance['slider_id']);
+    $instance['slider'] = $new_instance['slider'];
 
     return $instance;
   }
 
   function form( $instance ) {
     $inputs = new KwikInputs();
+    $defaults = array(
+      'title' => '',
+      'slider' => '',
+      'slider_id'=> '' );
     $output = '';
 
-    $instance = wp_parse_args( (array) $instance, array( 'title' => '', 'slider' => '' ) );
+    //get thumbnail
+    $slider_id = intval($instance['slider_id']);
+
+    $kwik_slides = get_post_meta($slider_id, '_ks_slides', false)[0];
+    $theme = get_post_meta($slider_id, '_ks_slider_settings', false)[0][theme];
+
+    $slide_index = 0;
+    $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($kwik_slides[$slide_index]), 'kwik_slider' );
+
+    $instance = wp_parse_args( (array) $instance, $defaults);
 
     $output .= $inputs->text($this->get_field_name('title'), $instance['title'], __('Title:', 'kwik'), array("id" => $this->get_field_id('title'), "class" => "widefat"));
-    $output .= $inputs->text($this->get_field_name('slider'), $instance['slider'], __('Slider:', 'kwik'), array("id" => $this->get_field_id('slider'), "class" => "widefat ks_ac"));
-    // $preview = $inputs->markup('span', )
-    $output .= $inputs->markup('div', NULL, array('class'=>'slider_preview'));
+    $output .= $inputs->text($this->get_field_name('slider'), get_the_title($instance['slider_id']), __('Slider:', 'kwik'), array("id" => $this->get_field_id('slider'), "class" => "widefat ks_ac"));
+    $output .= $inputs->text($this->get_field_name('slider_id'), $instance['slider_id'], NULL, array("id" => $this->get_field_id('slider_id'), "class" => "widefat ks_slide_id", "type" => "hidden"));
+    $label = $inputs->markup('label', __('Preview','kwik'));
+    $hide = $slider_id ? '' : 'hide';
+    $preview = $inputs->markup('img', NULL, array("class" => "slider_preview", "src" => $thumb[0]));
+    $preview_class = array(
+      'slider_preview_wrap',
+      'ks_theme_'.$theme,
+      $hide
+      );
+    $output .= $inputs->markup('div', $label.$preview, array('class'=>$preview_class,));
 
     echo $output;
 
   }
+
 }
 

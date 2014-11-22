@@ -72,7 +72,9 @@ function ks_default_options() {
   $pagers = array(
   'circle' => 'Circle',
   'square' => 'Square',
-  'thumbnail' => 'Thumbnail'
+  'thumbnail' => 'Thumbnail',
+  'number' => 'Number',
+  'text' => 'Text'
   );
 
   $ks_default_options = array(
@@ -86,9 +88,9 @@ function ks_default_options() {
           'value' => '750',
           'attrs' => array('min'=>'0', 'max'=>'9001')
         ),
-        'transition_delay' => array(
+        'transition_timeout' => array(
           'type' => 'spinner',
-          'title' => __('Transition Delay', 'kwik'),
+          'title' => __('Transition Timeout', 'kwik'),
           'value' => '3000',
           'attrs' => array('min'=>'0', 'max'=>'9001')
         ),
@@ -116,11 +118,25 @@ function ks_default_options() {
           'value' => 'circle',
           'options' => $pagers
         ),
+        'pager_position' => array(
+          'type' => 'select',
+          'title' => __('Pager Position', 'kwik'),
+          'value' => 'circle',
+          'options' => KwikInputs::positions()
+        ),
         'pager_color' => array(
           'type' => 'color',
           'title' => __('Pager Color', 'kwik'),
           'value' => '#ffffff'
         ),
+        'slide_size' => array(
+          'title' => __('Slider Size', 'kwik'),
+          'desc' => __('This option will create a cropped custom image size with using these dimensions.', 'kwik'),
+          'fields' => array(
+            'width' => array('type'=>'spinner', 'title'=>'Width:','value'=>'920', 'attrs'=>array('min' => '0', 'max' => '1280')),
+            'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'300', 'attrs'=>array('min' => '0', 'max' => '800'))
+            )
+        )
       )
     )
   );

@@ -97,7 +97,8 @@ function ks_admin_js_css($hook) {
     wp_enqueue_script('ks-admin-edit-js', KS_PLUGIN_URL . '/js/' . KS_PREFIX . 'admin.js', array('jquery', 'jquery-ui-sortable'), NULL, true);
     wp_enqueue_style('ks-admin-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'admin.css', false, '2014-10-28');
   } elseif ('widgets.php' == $hook ) {
-		wp_enqueue_script('ks-admin-widgets-js', KS_PLUGIN_URL . '/js/' . KS_PREFIX . 'widgets_admin.js', array('jquery'), NULL, true);
+    wp_enqueue_script('ks-admin-widgets-js', KS_PLUGIN_URL . '/js/' . KS_PREFIX . 'widgets_admin.js', array('jquery'), NULL, true);
+    wp_enqueue_style('ks-admin-widgets-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'admin_widgets.css', false, '2014-10-28');
 	}
 }
 add_action('admin_enqueue_scripts', 'ks_admin_js_css');
@@ -117,7 +118,89 @@ add_action('admin_head', 'js_utils_path');
 function ks_scripts_and_styles() {
 
   wp_enqueue_script('jquery-cycle', 'http://malsup.github.io/min/jquery.cycle2.min.js', array('jquery'));
+  wp_enqueue_style('ks-main-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'main.css', false, '2014-10-28');
 
 }
 add_action('wp_enqueue_scripts', 'ks_scripts_and_styles');
 
+
+
+
+function get_slider($slider_id){
+  $output = '';
+  $inputs = new KwikInputs();
+  $kwik_slides = get_post_meta($slider_id, '_ks_slides')[0];
+  $ks_settings = get_post_meta($slider_id, '_ks_slider_settings')[0];
+
+  if(!empty($kwik_slides)){
+    foreach ($kwik_slides as $i => $v){
+      $output .= get_slide($v, $i);
+    }
+  }
+
+  wp_enqueue_style('ks-admin-widgets-css', KS_PLUGIN_URL . '/css/themes/'.$ks_settings['theme'].'.css', false, '2014-10-28');
+
+
+  $slider_settings = array();
+  foreach ($ks_settings as $sk => $sv){
+    $slider_settings['data-cycle-'.$sk] = $sv;
+  }
+  $slider_settings['data-cycle-slides'] = '.ks_slide';
+
+  $slider_settings['class'] = array(
+    'ks_slider_wrap',
+    'cycle-slideshow'
+  );
+
+  $output = $inputs->markup('div', $output, $slider_settings);
+
+  return $output;
+}
+
+function get_slide($slide_id, $i=0){
+  $inputs = new KwikInputs();
+  $slide = get_post( $slide_id );
+
+
+  $subtitle_val   =  get_post_meta($slide->ID,  '_slide_subtitle', true) ;
+  $learnmore_val  =  get_post_meta($slide->ID,  '_slide_learnmore', true);
+  $link_val       =  get_post_meta($slide->ID,  '_slide_link', true);
+  $img_val        =  get_post_thumbnail_id( $slide->ID );
+  $title_val      =  $slide->post_title;
+
+  if($subtitle_val){
+    $subtitle = $inputs->markup('p', $subtitle_val);
+  }
+
+  $img = get_the_post_thumbnail($slide->ID, 'kwik_slider');
+
+  if($link_val){
+    $link_attrs = array("href" => $link_val[url], "target" => $link_val[target], "title" => $title_val);
+    $img = $inputs->markup('a', $img, $link_attrs);
+    $title_val = $inputs->markup('a', $title_val, $link_attrs);
+  } else {
+
+  }
+
+  $slide_info = array(
+    'title' => $inputs->markup('h2', $title_val),
+    'subtitle' => $subtitle
+    );
+
+  $slide_info = $inputs->markup('div', $slide_info, array('class'=>'ks_slide_info'));
+
+  $slide_wrap = $inputs->markup('div', $img.$slide_info, array("class" => array("ks_slide", "ks_slide_".$i)));
+
+
+  return $slide_wrap;
+}
+
+
+function get_pager($theme, $pager_settings){
+  $output = '';
+
+  var_dump($pager_settings);
+
+
+  return $output;
+}
