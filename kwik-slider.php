@@ -25,6 +25,10 @@ foreach (glob(KS_PLUGIN_PATH . "/widgets/*.php") as $inc_filename) {
 
 add_action('init', 'ks_cpt_init');
 function ks_cpt_init() {
+
+  $settings = ks_get_options();
+  $slide_size = $settings['slide_size'];
+
 	register_post_type('kwik_slider', array(
 		'labels' => array(
 			'name' => __('Kwik Sliders', 'kwik'),
@@ -69,7 +73,9 @@ function ks_cpt_init() {
     'exclude_from_search' => true,
     'has_archive' => false
   ));
-	add_image_size('kwik_slider', 920, 230, true);
+  
+	add_image_size('kwik_slider', $slide_size['width'], $slide_size['height'], $slide_size['cropped']);
+
 }
 
 // add_action('admin_init', 'slider_options_init');
@@ -98,7 +104,7 @@ function ks_admin_js_css($hook) {
     wp_enqueue_style('ks-admin-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'admin.css', false, '2014-10-28');
   } elseif ('widgets.php' == $hook ) {
     wp_enqueue_script('ks-admin-widgets-js', KS_PLUGIN_URL . '/js/' . KS_PREFIX . 'widgets_admin.js', array('jquery'), NULL, true);
-    wp_enqueue_style('ks-admin-widgets-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'admin_widgets.css', false, '2014-10-28');
+    wp_enqueue_style('ks-admin-widgets-css', KS_PLUIN_URL . '/css/' . KS_PREFIX . 'admin_widgets.css', false, '2014-10-28');
 	}
 }
 add_action('admin_enqueue_scripts', 'ks_admin_js_css');

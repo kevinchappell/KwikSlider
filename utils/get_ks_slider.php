@@ -12,7 +12,7 @@
     $table_name = $wpdb->prefix."posts";
     $query = "\n";
     $query .= "SELECT concat( post_title ) name, 1 cnt, ID as slider_id FROM $table_name \n";
-    $query .= "WHERE post_status='publish'\n";
+    $query .= "WHERE post_status='publish'\n"
     $query .= "AND post_type='kwik_slider'\n";
     // $query .= "AND post_date < NOW()\n";
     $query .= "AND post_title LIKE '%$input%'\n";
@@ -20,7 +20,6 @@
     $query .= "LIMIT 10";
 
     $query_results = $wpdb->get_results($query, OBJECT);
-
 
     foreach ($query_results as $result) {
 

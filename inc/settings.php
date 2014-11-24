@@ -13,24 +13,21 @@ function ks_settings_init() {
 }
 
 function kwik_slider_settings() {
-  $utils = new KwikUtils();
-  $inputs = new KwikInputs();
   $settings = ks_get_options();
+  $form_fields = array(settings_fields(KS_PLUGIN_SETTINGS),KwikUtils::settings_sections(KS_PLUGIN_SETTINGS, $settings));
 
-  echo '<div class="wrap">';
-    echo $inputs->markup('h2', __('Slider Settings', 'kwik'));
-    echo $inputs->markup('p', __('Change the transition effect, duration and speed here.','kwik'));
-    echo '<form action="options.php" method="post">';
-      settings_fields(KS_PLUGIN_SETTINGS);
-      echo $utils->settings_sections(KS_PLUGIN_SETTINGS, $settings);
-    echo '</form>';
-  echo '</div>';
+    $output = KwikInputs::markup('h2', __('Slider Settings', 'kwik'));
+    $output .= KwikInputs::markup('p', __('Set the defaults to be used by the sliders. Here you can define transition effects, pagers and themes.','kwik'));
+    $output .= KwikInputs::markup('form', $form_fields, array("action"=>"options.php", "method"=>"post"));
+
+  echo KwikInputs::markup('div', $output, array('class'=>'wrap'));
 
 }
 
 function ks_get_options() {
   return get_option(KS_PLUGIN_SETTINGS, ks_default_options());
 }
+
 function ks_default_options() {
     $effects = array(
     'blindX' => __('Blind X', 'kwik'),
@@ -134,7 +131,8 @@ function ks_default_options() {
           'desc' => __('This option will create a cropped custom image size with using these dimensions.', 'kwik'),
           'fields' => array(
             'width' => array('type'=>'spinner', 'title'=>'Width:','value'=>'920', 'attrs'=>array('min' => '0', 'max' => '1280')),
-            'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'300', 'attrs'=>array('min' => '0', 'max' => '800'))
+            'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'300', 'attrs'=>array('min' => '0', 'max' => '800')),
+            'cropped' => array('type'=>'toggle', 'title'=>'Cropped:', 'value'=>'cropped')
             )
         )
       )

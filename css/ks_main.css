@@ -1,5 +1,10 @@
 .ks_slide_info{
   position:absolute;
   bottom:0;
-
 }
+
+
+.ks_slide_info h2{
+  margin-bottom:0;
+}
+
