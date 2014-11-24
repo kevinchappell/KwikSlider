@@ -2,7 +2,7 @@
 add_action( 'admin_menu', 'ks_add_admin_menu' );
 add_action( 'admin_init', 'ks_settings_init' );
 
-function ks_add_admin_menu(  ) {
+function ks_add_admin_menu() {
   add_submenu_page( 'edit.php?post_type=kwik_slider', __('Kwik Slider Settings', 'kwik'), __('Settings', 'kwik'), 'manage_options', 'kwik_slider', KS_PLUGIN_SETTINGS );
 }
 
@@ -14,14 +14,15 @@ function ks_settings_init() {
 
 function kwik_slider_settings() {
   $settings = ks_get_options();
-  $form_fields = array(settings_fields(KS_PLUGIN_SETTINGS),KwikUtils::settings_sections(KS_PLUGIN_SETTINGS, $settings));
-
-    $output = KwikInputs::markup('h2', __('Slider Settings', 'kwik'));
-    $output .= KwikInputs::markup('p', __('Set the defaults to be used by the sliders. Here you can define transition effects, pagers and themes.','kwik'));
-    $output .= KwikInputs::markup('form', $form_fields, array("action"=>"options.php", "method"=>"post"));
-
+  echo '<div class="wrap">';
+    echo KwikInputs::markup('h2', __('Slider Settings', 'kwik'));
+    echo KwikInputs::markup('p', __('Set the defaults to be used by the sliders. Here you can define transition effects, pagers and themes.','kwik'));
+    echo '<form action="options.php" method="post">';
+      settings_fields(KS_PLUGIN_SETTINGS);
+      echo KwikUtils::settings_sections(KS_PLUGIN_SETTINGS, $settings);
+    echo '</form>';
+  echo '</div>';
   echo KwikInputs::markup('div', $output, array('class'=>'wrap'));
-
 }
 
 function ks_get_options() {
