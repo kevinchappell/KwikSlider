@@ -55,8 +55,10 @@ class KS_Slider_Widget extends WP_Widget {
     //get thumbnail
     $slider_id = intval($instance['slider_id']);
 
-    $kwik_slides = get_post_meta($slider_id, '_ks_slides', false)[0];
-    $theme = get_post_meta($slider_id, '_ks_slider_settings', false)[0][theme];
+    $kwik_slides = get_post_meta($slider_id, '_ks_slides', false);
+    $kwik_slides = $kwik_slides[0];
+    $slider_settings = get_post_meta($slider_id, '_ks_slider_settings', false);
+    $theme = $slider_settings[0][theme];
 
     $slide_index = 0;
     $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($kwik_slides[$slide_index]), 'kwik_slider' );

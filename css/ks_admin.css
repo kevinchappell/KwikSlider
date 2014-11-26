@@ -4,23 +4,22 @@
 #ks_meta label {
   display: block;
 }
-.clear_img {
-  content: "X";
-  color: red;
-  width: 7px;
-  height: 7px;
-}
+
 #ks_slide_meta .slide_edit .clear_img {
   display: none;
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 0;
   padding: 0;
-  line-height: 24px;
-  height: 24px;
-  font-size: 20px;
+  line-height: 16px;
+  height: 16px;
+  background-color: #fff;
+  font-size: 16px;
   text-align: center;
-  width: 24px;
+  width: 16px;
+}
+#ks_slide_meta .slide_edit .kf_img_wrap:hover .clear_img {
+  display: inline-block;
 }
 .learn_more:hover {
   color: #25BC00;
@@ -49,9 +48,6 @@
   display: block;
   padding: .5em;
   width: 100%;
-}
-#ks_slide_meta .slide_edit:hover .clear_img {
-  display: inline-block;
 }
 #ks_slide_meta .slide_edit {
   position: relative;

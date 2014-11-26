@@ -120,12 +120,39 @@ function ks_default_options() {
           'type' => 'select',
           'title' => __('Pager Position', 'kwik'),
           'value' => 'circle',
-          'options' => KwikInputs::positions()
+          'options' => array(
+            'left:0;top:0;text-align: left;'                           => 'Top Left',
+            'left:50%;top:0;margin-left:-250px;text-align: center;'         => 'Top Center',
+            'right:50%;top:0;margin-right:-250px;text-align: right;'       => 'Top Right',
+            'left:50%;top:50%;margin-left:-250px;text-align: center;'       => 'Center Center',
+            'left:0;bottom:0;text-align: left;'                        => 'Bottom Left',
+            'left:50%;bottom:0;margin-left:-250px;text-align: center;'      => 'Bottom Center',
+            'right:0;bottom:0;text-align: right;'                       => 'Bottom Right'
+            )
         ),
         'pager_color' => array(
           'type' => 'color',
           'title' => __('Pager Color', 'kwik'),
           'value' => '#ffffff'
+        ),
+        'pager_color_active' => array(
+          'type' => 'color',
+          'title' => __('Pager Color Active', 'kwik'),
+          'value' => '#990000'
+        ),
+        'pager_size' => array(
+          'title' => __('Pager Size', 'kwik'),
+          'desc' => __('Set the size of the pager buttons in pixels', 'kwik'),
+          'fields' => array(
+            'width' => array('type'=>'spinner', 'title'=>'Width:','value'=>'20', 'attrs'=>array('min' => '1', 'max' => '100')),
+            'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'20', 'attrs'=>array('min' => '1', 'max' => '100'))
+            )
+        ),
+        'pager_spacing' => array(
+          'type' => 'spinner',
+          'title' => __('Pager Spacing', 'kwik'),
+          'value' => '10',
+          'attrs'=>array('min' => '1', 'max' => '100')
         ),
         'slide_size' => array(
           'title' => __('Slider Size', 'kwik'),

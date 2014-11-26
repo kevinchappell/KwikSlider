@@ -1,10 +1,58 @@
+.ks_slider_wrap{
+  position:relative;
+}
+
 .ks_slide_info{
   position:absolute;
   bottom:0;
+  z-index:1;
 }
 
+.ks_slide{
+  position:absolute;
+  left:0;
+  bottom:0;
+}
+.ks_slide img{
+  width:100%;
+  height:auto;
+}
 
 .ks_slide_info h2{
   margin-bottom:0;
 }
 
+.ks_slide .full_slide_link{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+
+
+.ks_pager{
+  width:500px;
+  position:absolute;
+  z-index:500;
+}
+
+.ks_pager .slide-index{
+  display:inline-block;
+}
+
+
+
+
+
+/* Clearing floats */
+ .clear:after, .wrapper:after, .format-status .entry-header:after {
+    clear: both;
+}
+.clear:before, .clear:after, .wrapper:before, .wrapper:after, .format-status .entry-header:before, .format-status .entry-header:after {
+    display: table;
+    content:"";
+}

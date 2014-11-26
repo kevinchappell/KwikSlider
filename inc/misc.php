@@ -29,7 +29,8 @@ class KS_MISC {
     if($thumb){
       $thumb = $thumb[0];
     } else {
-      $kwik_slides = get_post_meta($slider_id, '_ks_slides', false)[0];
+      $kwik_slides = get_post_meta($slider_id, '_ks_slides', false);
+      $kwik_slides = $kwik_slides[0];
       $slide_id = intval($kwik_slides[$slide_index]);
       $index = $slide_index+1;
       $thumb = KS_MISC::getSliderThumb($slide_id, $index);

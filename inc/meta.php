@@ -19,16 +19,20 @@ function slider_settings() {
   $ks_meta .= $inputs->nonce(KS_PLUGIN_BASENAME.'_nonce', wp_create_nonce(plugin_basename(__FILE__)));
 
   // Get the current data
-  $ks_slider_settings = get_post_meta($post->ID, '_ks_slider_settings')[0];
+  $ks_slider_settings = get_post_meta($post->ID, '_ks_slider_settings');
+  $ks_slider_settings = $ks_slider_settings[0];
 
   $ks_slider_fx = $ks_slider_settings[fx] ? $ks_slider_settings[fx] : $options['transition_effect'];
   $ks_slider_speed = $ks_slider_settings[speed] ? $ks_slider_settings[speed] : $options['transition_speed'];
   $ks_slider_timeout = $ks_slider_settings[timeout] ? $ks_slider_settings[timeout] : $options['transition_timeout'];
+  $ks_slider_size = $ks_slider_settings[slide_size] ? $ks_slider_settings[slide_size] : $options['slide_size'];
   $ks_slider_theme = $ks_slider_settings[theme] ? $ks_slider_settings[theme] : $options['theme'];
 
   $ks_meta .= $inputs->select('ks_slider_settings[fx]', $ks_slider_fx, __('Effect', 'kwik'), NULL, $defaults['behavior']['settings']['transition_effect']['options']);
   $ks_meta .= $inputs->spinner('ks_slider_settings[speed]', $ks_slider_speed, __('Speed', 'kwik'), array('max'=>'2000', 'min'=>'0'));
   $ks_meta .= $inputs->spinner('ks_slider_settings[timeout]', $ks_slider_timeout, __('Delay', 'kwik'), array('max'=>'12000', 'min'=>'0'));
+  $ks_meta .= $inputs->markup('label', __('Slider Size'));
+  $ks_meta .= $inputs->multi('ks_slider_settings[slide_size]', $ks_slider_size, $defaults['appearance']['settings']['slide_size']);
   $ks_meta .= $inputs->select('ks_slider_settings[theme]', $ks_slider_theme, __('Theme', 'kwik'), NULL, $defaults['appearance']['settings']['theme']['options']);
 
   echo $ks_meta;
@@ -45,17 +49,25 @@ function pager_settings() {
   $output .= $inputs->nonce(KS_PLUGIN_BASENAME.'_nonce', wp_create_nonce(plugin_basename(__FILE__)));
 
   // Get the current data
-  $ks_pager_settings = get_post_meta($post->ID, '_ks_pager_settings')[0];
+  $ks_pager_settings = get_post_meta($post->ID, '_ks_pager_settings');
+  $ks_pager_settings = $ks_pager_settings[0];
 
   $ks_pager_style = $ks_pager_settings[style] ? $ks_pager_settings[style] : $options['pager_style'];
   $ks_pager_speed = $ks_pager_settings[fx] ? $ks_pager_settings[fx] : $options['transition_fx'];
   $ks_pager_position = $ks_pager_settings[position] ? $ks_pager_settings[position] : $options['pager_position'];
-  $ks_pager_theme = $ks_pager_settings[pager_size] ? $ks_pager_settings[pager_size] : $options['pager_size'];
+  $ks_pager_size = $ks_pager_settings[pager_size] ? $ks_pager_settings[pager_size] : $options['pager_size'];
+  $ks_pager_spacing = $ks_pager_settings[pager_spacing] ? $ks_pager_settings[pager_spacing] : $options['pager_spacing'];
+  $ks_pager_color = $ks_pager_settings[pager_color] ? $ks_pager_settings[pager_color] : $options['pager_color'];
+  $ks_pager_color_active = $ks_pager_settings[pager_color_active] ? $ks_pager_settings[pager_color_active] : $options['pager_color_active'];
 
-  $output .= $inputs->select('ks_slider_settings[style]', $ks_pager_style, __('Type', 'kwik'), NULL, $defaults['appearance']['settings']['pager_style']['options']);
-  $output .= $inputs->spinner('ks_slider_settings[fx]', $ks_pager_speed, __('Speed', 'kwik'), array('max'=>'2000', 'min'=>'0'));
-  $output .= $inputs->spinner('ks_slider_settings[position]', $ks_pager_position, __('Position', 'kwik'), array('max'=>'12000', 'min'=>'0'));
-  $output .= $inputs->select('ks_slider_settings[pager_size]', $ks_pager_theme, __('Theme', 'kwik'), NULL, $defaults['appearance']['settings']['theme']['options']);
+  $output .= $inputs->select('ks_pager_settings[style]', $ks_pager_style, __('Style', 'kwik'), NULL, $defaults['appearance']['settings']['pager_style']['options']);
+  $output .= $inputs->select('ks_pager_settings[fx]', $ks_pager_speed, __('Effect', 'kwik'), NULL, $defaults['behavior']['settings']['transition_effect']['options']);
+  $output .= $inputs->select('ks_pager_settings[position]', $ks_pager_position, __('Position', 'kwik'), NULL, $defaults['appearance']['settings']['pager_position']['options']);
+  $output .= $inputs->spinner('ks_pager_settings[pager_spacing]', $ks_pager_spacing, __('Spacing: ', 'kwik'),array('min' => '1', 'max' => '100'));
+  $output .= $inputs->color('ks_pager_settings[pager_color]', $ks_pager_color, __('Color: ', 'kwik'));
+  $output .= $inputs->color('ks_pager_settings[pager_color_active]', $ks_pager_color_active, __('Active Color: ', 'kwik'));
+  $output .= $inputs->markup('label', __('Pager Size'));
+  $output .= $inputs->multi('ks_pager_settings[pager_size]', $ks_pager_size, $defaults['appearance']['settings']['pager_size']);
 
   echo $output;
 }
@@ -150,7 +162,8 @@ function save_ks_meta($post_id, $post) {
       //TODO add meta validation
       $ks_slides = array(
         '_ks_slides' => $slide_ids,
-        '_ks_slider_settings' => $_POST['ks_slider_settings']
+        '_ks_slider_settings' => $_POST['ks_slider_settings'],
+        '_ks_pager_settings' => $_POST['ks_pager_settings']
       );
 
       // Add values of $ks_slides as custom fields
@@ -158,7 +171,7 @@ function save_ks_meta($post_id, $post) {
         if ($post->post_type == 'revision') {
           return;
         }
-        __update_post_meta($post->ID, $key, $value);
+        KwikUtils::__update_meta($post->ID, $key, $value);
       }
     // } else {
     //   return;

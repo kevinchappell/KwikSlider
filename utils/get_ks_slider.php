@@ -12,7 +12,7 @@
     $table_name = $wpdb->prefix."posts";
     $query = "\n";
     $query .= "SELECT concat( post_title ) name, 1 cnt, ID as slider_id FROM $table_name \n";
-    $query .= "WHERE post_status='publish'\n"
+    $query .= "WHERE post_status='publish'\n";
     $query .= "AND post_type='kwik_slider'\n";
     // $query .= "AND post_date < NOW()\n";
     $query .= "AND post_title LIKE '%$input%'\n";
@@ -22,12 +22,16 @@
     $query_results = $wpdb->get_results($query, OBJECT);
 
     foreach ($query_results as $result) {
+      $slider_settings = get_post_meta($result->slider_id, "_ks_slider_settings");
+      $slider_settings = $slider_settings[0];
+      $kwik_slides = get_post_meta($result->slider_id, "_ks_slides");
+      $kwik_slides = $kwik_slides[0];
 
       $json = array();
       $json['label'] =        $result->name;
       $json['id'] =           $result->slider_id;
-      $json['theme'] =        get_post_meta($result->slider_id, "_ks_slider_settings")[0][theme];
-      $json['slide_count'] =  sizeof(get_post_meta($result->slider_id, "_ks_slides")[0]);
+      $json['theme'] =        $slider_settings[theme];
+      $json['slide_count'] =  sizeof($kwik_slides);
 
       $json['thumbna  il'] =    KS_MISC::getSliderThumb($result->slider_id);
       $data[] = $json;

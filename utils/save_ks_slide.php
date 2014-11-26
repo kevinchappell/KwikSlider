@@ -35,7 +35,7 @@
       // Add values of $ks_slide_meta as custom fields
       foreach ($ks_slide_meta as $key => $value) {
           if( $post->post_type == 'revision' ) return;
-          __update_post_meta( $post_id, $key, $value );
+          KwikUtils::__update_meta( $post_id, $key, $value );
       }
 
       $json = array(
