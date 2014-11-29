@@ -112,7 +112,7 @@ function get_slide_inputs($slide_id = NULL){
   $slide_inputs = array(
     'title_input' =>      $inputs->text(KS_PREFIX.'slide_title',    $title_val,     NULL, array('placeholder'=>__('Title','kwik'))),
     'subtitle_input' =>   $inputs->text(KS_PREFIX.'slide_subtitle', $subtitle_val,  NULL, array('placeholder'=>__('Subtitle/Caption','kwik'))),
-    'learnmore_input' =>  $inputs->text(KS_PREFIX.'slide_learnmore',$learnmore_val, NULL, array('placeholder'=>__('Learn More','kwik'))),
+    // 'learnmore_input' =>  $inputs->text(KS_PREFIX.'slide_learnmore',$learnmore_val, NULL, array('placeholder'=>__('Learn More','kwik'))),
     'link_input' =>       $inputs->link(KS_PREFIX.'slide_link',     $link_val,      NULL, array('placeholder'=>__('Link','kwik'))),
     'slide_id_input' =>   $inputs->input(array( 'value'=> $slide_id, 'name'=> KS_PREFIX.'slide_id[]',  'type'=>'hidden', 'class' => 'ks_slide_id'))
     );
