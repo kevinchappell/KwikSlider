@@ -78,11 +78,6 @@ function ks_cpt_init() {
 
 }
 
-// add_action('admin_init', 'slider_options_init');
-// function slider_options_init() {
-// 	register_setting('slider_options', 'slider_options', 'ks_settings_validate');
-// }
-
 function ks_admin_js_css($hook) {
 	$screen = get_current_screen();
 	// make these settings
