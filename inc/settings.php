@@ -144,8 +144,24 @@ function ks_default_options() {
           'title' => __('Pager Size', 'kwik'),
           'desc' => __('Set the size of the pager buttons in pixels', 'kwik'),
           'fields' => array(
-            'width' => array('type'=>'spinner', 'title'=>'Width:','value'=>'20', 'attrs'=>array('min' => '1', 'max' => '100')),
-            'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'20', 'attrs'=>array('min' => '1', 'max' => '100'))
+            'width' => array(
+              'type' => 'spinner',
+              'title' => 'Width:',
+              'value' => '20',
+              'attrs' => array(
+                'min' => '1',
+                'max' => '100'
+                )
+              ),
+            'height' => array(
+              'type'=>'spinner',
+              'title'=>'Height:',
+              'value'=>'20',
+              'attrs'=>array(
+                'min' => '1',
+                'max' => '100'
+                )
+              )
             )
         ),
         'pager_spacing' => array(
@@ -154,15 +170,15 @@ function ks_default_options() {
           'value' => '10',
           'attrs'=>array('min' => '1', 'max' => '100')
         ),
-        'slide_size' => array(
-          'title' => __('Slider Size', 'kwik'),
-          'desc' => __('This option will create a cropped custom image size with using these dimensions.', 'kwik'),
-          'fields' => array(
-            'width' => array('type'=>'spinner', 'title'=>'Width:','value'=>'920', 'attrs'=>array('min' => '0', 'max' => '1280')),
-            'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'300', 'attrs'=>array('min' => '0', 'max' => '800')),
-            'cropped' => array('type'=>'toggle', 'title'=>'Cropped:', 'value'=>'cropped')
-            )
-        )
+        // 'slide_size' => array(
+        //   'title' => __('Slider Size', 'kwik'),
+        //   'desc' => __('This option will create a cropped custom image size with using these dimensions.', 'kwik'),
+        //   'fields' => array(
+        //     'width' => array('type'=>'spinner', 'title'=>'Width:','value'=>'920', 'attrs'=>array('min' => '0', 'max' => '1280')),
+        //     'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'300', 'attrs'=>array('min' => '0', 'max' => '800')),
+        //     'cropped' => array('type'=>'toggle', 'title'=>'Cropped:', 'value'=>'cropped')
+        //     )
+        // )
       )
     )
   );

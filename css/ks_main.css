@@ -1,7 +1,9 @@
 .ks_slider_wrap{
   position:relative;
 }
-
+.ks_slider{
+  line-height: 0;
+}
 .ks_slide_info{
   position:absolute;
   bottom:0;

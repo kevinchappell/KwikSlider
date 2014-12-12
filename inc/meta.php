@@ -32,7 +32,7 @@ function slider_settings() {
   $ks_meta .= $inputs->spinner('ks_slider_settings[speed]', $ks_slider_speed, __('Speed', 'kwik'), array('max'=>'2000', 'min'=>'0'));
   $ks_meta .= $inputs->spinner('ks_slider_settings[timeout]', $ks_slider_timeout, __('Delay', 'kwik'), array('max'=>'12000', 'min'=>'0'));
   $ks_meta .= $inputs->markup('label', __('Slider Size'));
-  $ks_meta .= $inputs->multi('ks_slider_settings[slide_size]', $ks_slider_size, $defaults['appearance']['settings']['slide_size']);
+  // $ks_meta .= $inputs->multi('ks_slider_settings[slide_size]', $ks_slider_size, $defaults['appearance']['settings']['slide_size']);
   $ks_meta .= $inputs->select('ks_slider_settings[theme]', $ks_slider_theme, __('Theme', 'kwik'), NULL, $defaults['appearance']['settings']['theme']['options']);
 
   echo $ks_meta;

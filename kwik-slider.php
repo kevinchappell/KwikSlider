@@ -75,7 +75,6 @@ function ks_cpt_init() {
   ));
 
 	add_image_size('kwik_slider', $slide_size['width'], $slide_size['height'], $slide_size['cropped']);
-
 }
 
 function ks_admin_js_css($hook) {
@@ -92,10 +91,10 @@ function ks_admin_js_css($hook) {
 		"post-new.php",
 	);
 
-	// Check screen hook and current post type
-	if (in_array($screen->post_type, $post_types_array)) {
-		wp_enqueue_script('jquery-ui-sortable');
-    wp_enqueue_script('jquery-ui-autocomplete');
+  wp_enqueue_script('jquery-ui-autocomplete');
+  // Check screen hook and current post type
+  if (in_array($screen->post_type, $post_types_array)) {
+    wp_enqueue_script('jquery-ui-sortable');
     wp_enqueue_script('ks-admin-edit-js', KS_PLUGIN_URL . '/js/' . KS_PREFIX . 'admin.js', array('jquery', 'jquery-ui-sortable'), NULL, true);
     wp_enqueue_style('ks-admin-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'admin.css', false, '2014-10-28');
   } elseif ('widgets.php' == $hook ) {
@@ -105,7 +104,7 @@ function ks_admin_js_css($hook) {
 }
 add_action('admin_enqueue_scripts', 'ks_admin_js_css');
 
-
+// Adds the URL path to the utilities dir.
 function js_utils_path(){
   echo '<span style="display:none;" id="ks_js_utils_path">'.KS_PLUGIN_URL.'/utils</span>';
 }
@@ -127,6 +126,12 @@ function ks_scripts_and_styles() {
 add_action('wp_enqueue_scripts', 'ks_scripts_and_styles');
 
 
+// Add shortcode
+add_shortcode('kwik_slider', 'kwik_slider_shortcode');
+function kwik_slider_shortcode($attr){
+  return get_slider($attr['slider_id']);
+}
+// TODO: add "Insert Slider" button to the editor.
 
 
 function get_slider($slider_id){
@@ -168,7 +173,6 @@ function get_slider($slider_id){
 function get_slide($slide_id, $i=0){
   $inputs = new KwikInputs();
   $slide = get_post( $slide_id );
-
 
   $subtitle_val   =  get_post_meta($slide->ID,  '_slide_subtitle', true) ;
   $learnmore_val  =  get_post_meta($slide->ID,  '_slide_learnmore', true);
@@ -258,10 +262,10 @@ function slider_style($slides, $settings){
   $output .= '}';
 
   $output .= '.ks_slider{';
-    if(!empty($settings['slide_size'])){
-      $output .= 'width: '.$settings['slide_size']['width'].'px;';
-      $output .= 'height: '.$settings['slide_size']['height'].'px;';
-    }
+    // if(!empty($settings['slide_size'])){
+    //   $output .= 'width: '.$settings['slide_size']['width'].'px;';
+    //   $output .= 'height: '.$settings['slide_size']['height'].'px;';
+    // }
   $output .= '}';
 
   if($settings['style']==='circle'){
@@ -295,5 +299,5 @@ function slider_style($slides, $settings){
 
   }
 
-  return $inputs->markup('style', $output, array('type' => 'text/css'));
+  return $inputs->markup('style', $output, array('type' => 'text/css', 'scoped' => NULL));
 }
