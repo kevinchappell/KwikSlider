@@ -1,31 +1,26 @@
 jQuery(document).ready(function($) {
+  'use strict' ;
 
-
-  $("#ks_slide_meta").sortable({
-    cursor: 'move',
+  $('#ks_slide_meta').sortable({
     opacity: 0.9,
     handle: '.move_slide',
     cancel: 'input, textarea, select',
-    disable: 'input, textarea, select',
-    receive: function(event, ui) {
-      $("li.no-results", ul_obj).remove();
-    }
+    disable: 'input, textarea, select'
   });
 
-
-  function ks_slide_autocomplete() {
+  function ksSlideAutocomplete() {
     $('#ks_slide_meta input[name=ks_slide_title]')
-      .bind("keydown", function(event) {
+      .bind('keydown', function(event) {
         if (event.keyCode === $.ui.keyCode.TAB &&
-          $(this).data("autocomplete").menu.active) {
+          $(this).data('autocomplete').menu.active) {
           event.preventDefault();
         }
       })
       .autocomplete({
         delay: 333,
-        source: $('#ks_slide_meta').attr('ks-location') + "/utils/get_ks_slide.php",
+        source: $('#ks_slide_meta').attr('ks-location') + '/utils/get_ks_slide.php',
         select: function(event, ui) {
-          var slide = $(this).parents(".slide_edit");
+          var slide = $(this).parents('.slide_edit');
           $('.ks_slide_id', slide).val(ui.item.id);
           $('.ks-slide-subtitle', slide).val(ui.item.subtitle);
           $('.ks-slide-learnmore', slide).val(ui.item.learn_more);
@@ -44,15 +39,15 @@ jQuery(document).ready(function($) {
         create: function() {
           $(this)._renderItem = function(ul, item) {
             console.log(item);
-            var inner_html = '<a class="clear">' + item.item.thumbnail + '</a>';
-            return $("<li></li>").data("item.autocomplete", item).append(inner_html).appendTo(ul);
+            var innerHTML = '<a class="clear">' + item.item.thumbnail + '</a>';
+            return $('<li></li>').data('item.autocomplete', item).append(innerHTML).appendTo(ul);
           };
         }
       });
   }
 
 
-  ks_slide_autocomplete();
+  ksSlideAutocomplete();
 
 
   // $('#add_kcdl_box').live("click", function () {
@@ -60,11 +55,11 @@ jQuery(document).ready(function($) {
   //     $(this).parent().hide();
   //     var template = $("#ks_slide_template").html();
   //     $("#ks_slide_meta").append(template);
-  //     ks_slide_autocomplete();
+  //     ksSlideAutocomplete();
   //   }
   // });
 
-  // $('.clone_slide').on("click", function (e) {
+  // $('.clone_slide').on("click", function () {
   //   var slide = $(this).parents('.slide_edit');
   //   slide.clone().insertAfter(slide);
   //   reIndex_btn_ul();
@@ -73,65 +68,55 @@ jQuery(document).ready(function($) {
   //   $("#kcdl_box_btn_wrap").hide();
   //   var template = $("#ks_slide_template").html();
   //   $("#ks_slide_meta").append(template);
-  //   ks_slide_autocomplete();
+  //   ksSlideAutocomplete();
   // }
   // });
 
-  $('#ks_slide_meta').on('click', '.remove_slide', function(e) {
+  $('#ks_slide_meta').on('click', '.remove_slide', function() {
     var slide = $(this).parents('.slide_edit');
     if ($('.slide_edit').length > 1) {
       if (confirm($(this).attr('del-confirm'))) {
         slide.remove();
       }
     } else {
-      $(".slide_messages", slide).addClass('error').html('Minimum of 1 slide required').fadeIn(333).delay(2500).fadeOut(333, function() {
+      $('.slide_messages', slide).addClass('error').html('Minimum of 1 slide required').fadeIn(333).delay(2500).fadeOut(333, function() {
         $(this).removeClass('error');
       });
     }
   });
 
-  $('#ks_slide_meta').on('click', '.clone_slide', function(e) {
+  $('#ks_slide_meta').on('click', '.clone_slide', function() {
     var slide = $(this).parents('.slide_edit');
     var newSlide = slide.clone().insertAfter(slide);
-    $("input.ks_slide_id", newSlide).val('');
-    ks_slide_autocomplete();
+    $('input.ks_slide_id', newSlide).val('');
+    ksSlideAutocomplete();
   });
 
-  $('#ks_slide_meta').on('click', '.save_slide', function(e) {
+  $('#ks_slide_meta').on('click', '.save_slide', function() {
     // var slide_id = $(this).closest('input.ks_slide_id').val();
-    save_ks_slide($(this));
+    saveKsSlide($(this));
   });
 
   $('#ks_slide_meta').on('change', ':input', function() {
-    save_ks_slide($(this));
+    saveKsSlide($(this));
   });
 
-  function save_ks_slide(elem) {
-    var slide = elem.parents(".slide_edit"),
-      slider_id = {
+  function saveKsSlide(elem) {
+    var slide = elem.parents('.slide_edit'),
+      sliderID = {
         'name': $('#post_ID').attr('name'),
         'value': $('#post_ID').val()
       },
-      fields = slide.find(":input").serializeArray(),
-      save_ks_slide_util = $('#ks_slide_meta').attr('ks-location') + "/utils/save_ks_slide.php";
-    fields.push(slider_id);
+      fields = slide.find(':input').serializeArray(),
+      saveKsSlideUtil = $('#ks_slide_meta').attr('ks-location') + "/utils/saveKsSlide.php";
+    fields.push(sliderID);
 
-    $.post(save_ks_slide_util, fields)
+    $.post(saveKsSlideUtil, fields)
       .done(function(data) {
-        $("input.ks_slide_id", slide).val(data.slide_id);
-        $(".slide_messages", slide).html(data.message).fadeIn(333).delay(2500).fadeOut(333);
+        $('input.ks_slide_id', slide).val(data.slide_id);
+        $('.slide_messages', slide).html(data.message).fadeIn(333).delay(2500).fadeOut(333);
       });
 
-  }
-
-
-  function reIndex_btn_ul() {
-    $("li:not(.ignore)", "#ks_slide_meta.sortable").each(function(i) {
-      $("input, textarea, select", this).attr("name",
-        function() {
-          return $(this).attr("name").replace(/\d+/g, i);
-        });
-    });
   }
 
 
