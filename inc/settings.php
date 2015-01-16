@@ -14,15 +14,16 @@ function ks_settings_init() {
 
 function kwik_slider_settings() {
   $settings = ks_get_options();
+  $inputs = new KwikInputs();
   echo '<div class="wrap">';
-    echo KwikInputs::markup('h2', __('Slider Settings', 'kwik'));
-    echo KwikInputs::markup('p', __('Set the defaults to be used by the sliders. Here you can define transition effects, pagers and themes.','kwik'));
+    echo $inputs->markup('h2', __('Slider Settings', 'kwik'));
+    echo $inputs->markup('p', __('Set the defaults to be used by the sliders. Here you can define transition effects, pagers and themes.','kwik'));
     echo '<form action="options.php" method="post">';
       settings_fields(KS_PLUGIN_SETTINGS);
       echo KwikUtils::settings_sections(KS_PLUGIN_SETTINGS, $settings);
     echo '</form>';
   echo '</div>';
-  echo KwikInputs::markup('div', $output, array('class'=>'wrap'));
+  echo $inputs->markup('div', $output, array('class'=>'wrap'));
 }
 
 function ks_get_options() {
@@ -170,15 +171,15 @@ function ks_default_options() {
           'value' => '10',
           'attrs'=>array('min' => '1', 'max' => '100')
         ),
-        // 'slide_size' => array(
-        //   'title' => __('Slider Size', 'kwik'),
-        //   'desc' => __('This option will create a cropped custom image size with using these dimensions.', 'kwik'),
-        //   'fields' => array(
-        //     'width' => array('type'=>'spinner', 'title'=>'Width:','value'=>'920', 'attrs'=>array('min' => '0', 'max' => '1280')),
-        //     'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'300', 'attrs'=>array('min' => '0', 'max' => '800')),
-        //     'cropped' => array('type'=>'toggle', 'title'=>'Cropped:', 'value'=>'cropped')
-        //     )
-        // )
+        'slide_size' => array(
+          'title' => __('Slider Size', 'kwik'),
+          'desc' => __('This option will create a cropped custom image size with using these dimensions.', 'kwik'),
+          'fields' => array(
+            'width' => array('type'=>'spinner', 'title'=>'Width:','value'=>'920', 'attrs'=>array('min' => '0', 'max' => '1280')),
+            'height' => array('type'=>'spinner', 'title'=>'Height:', 'value'=>'300', 'attrs'=>array('min' => '0', 'max' => '800')),
+            'cropped' => array('type'=>'toggle', 'title'=>'Cropped:', 'value'=>'cropped')
+            )
+        )
       )
     )
   );

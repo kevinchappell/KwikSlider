@@ -8,7 +8,7 @@
 class KS_MISC {
    function __construct() {
       $this->name = "KS_MISC";
-      $this->getSliderThumb = $this->getSliderThumb;
+      // $this->getSliderThumb = $this->getSliderThumb;
       add_filter('gettext', array($this, 'ks_slider_text_filter'), 20, 3);
    }
 

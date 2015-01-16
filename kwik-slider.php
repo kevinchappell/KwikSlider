@@ -27,7 +27,6 @@ add_action('init', 'ks_cpt_init');
 function ks_cpt_init() {
 
   $settings = ks_get_options();
-  $slide_size = $settings['slide_size'];
 
 	register_post_type('kwik_slider', array(
 		'labels' => array(
@@ -73,8 +72,11 @@ function ks_cpt_init() {
     'exclude_from_search' => true,
     'has_archive' => false
   ));
-
-	add_image_size('kwik_slider', $slide_size['width'], $slide_size['height'], $slide_size['cropped']);
+  if(isset($settings['slide_size'])){
+    $slide_size = $settings['slide_size'];
+    $cropped = isset($slide_size['cropped']) ? TRUE : FALSE;
+  	add_image_size('kwik_slider', $slide_size['width'], $slide_size['height'], $cropped);
+  }
 }
 
 function ks_admin_js_css($hook) {
@@ -147,7 +149,9 @@ function get_slider($slider_id){
 
   if(!empty($kwik_slides)){
     $ks_pager_settings['theme'] = $ks_settings['theme'];
-    $ks_pager_settings['slide_size'] = $ks_settings['slide_size'];
+    if(isset($ks_settings['slide_size'])){
+      $ks_pager_settings['slide_size'] = $ks_settings['slide_size'];
+    }
     $slider_style = slider_style($kwik_slides, $ks_pager_settings);
 
     foreach ($kwik_slides as $i => $v){
@@ -180,10 +184,6 @@ function get_slide($slide_id, $i=0){
   $img_val        =  get_post_thumbnail_id( $slide->ID );
   $title_val      =  $slide->post_title;
 
-  if($subtitle_val){
-    $subtitle = $inputs->markup('p', $subtitle_val);
-  }
-
   $img = get_the_post_thumbnail($slide->ID, 'kwik_slider');
   if($link_val['url']){
     $link_attrs = array("href" => $link_val[url], "target" => $link_val[target], "title" => $title_val);
@@ -198,14 +198,17 @@ function get_slide($slide_id, $i=0){
 
   $slide_info = array(
     'title' => $inputs->markup('h2', $title_val),
-    'subtitle' => $subtitle
-    );
+  );
+
+  if(isset($subtitle_val)){
+    $slide_info['subtitle'] = $inputs->markup('p', $subtitle_val);
+  }
 
   $slide_contents = array(
-    'full_slide_link' => $full_slide_link,
+    'full_slide_link' => isset($full_slide_link) ? $full_slide_link : NULL,
     'img' => $img,
     'slide_info' => $inputs->markup('div', $slide_info, array('class'=>'ks_slide_info'))
-    );
+  );
 
 
   $slide_wrap = $inputs->markup('div', $slide_contents, array("class" => array("ks_slide", "ks_slide_".$i)));
