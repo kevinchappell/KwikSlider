@@ -8,7 +8,7 @@
 class KS_MISC {
    function __construct() {
       $this->name = "KS_MISC";
-      // $this->getSliderThumb = $this->getSliderThumb;
+      // $this->get_slider_thumb = $this->get_slider_thumb;
       add_filter('gettext', array($this, 'ks_slider_text_filter'), 20, 3);
    }
 
@@ -21,7 +21,7 @@ class KS_MISC {
     include($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
   }
 
-  public function getSliderThumb($slider_id, $slide_index = 0){
+  public function get_slider_thumb($slider_id, $slide_index = 0){
     // if(!function_exists('wp_get_attachment_image_src')){
     //   KS_MISC::loadWP();
     // }
@@ -33,7 +33,7 @@ class KS_MISC {
       $kwik_slides = $kwik_slides[0];
       $slide_id = intval($kwik_slides[$slide_index]);
       $index = $slide_index+1;
-      $thumb = KS_MISC::getSliderThumb($slide_id, $index);
+      $thumb = KS_MISC::get_slider_thumb($slide_id, $index);
     }
     return $thumb;
   }
