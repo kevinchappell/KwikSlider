@@ -39,7 +39,7 @@ function save_ks_slide($post)
             return;
         }
 
-        KwikUtils::update_meta($post_id, $key, $value);
+        KwikMeta::update_meta($post_id, $key, $value);
     }
 
     $json = array(

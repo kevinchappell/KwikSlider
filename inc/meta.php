@@ -24,11 +24,11 @@ function slider_settings()
     $ks_slider_settings = get_post_meta($post->ID, '_ks_slider_settings');
     $ks_slider_settings = $ks_slider_settings[0];
 
-    $ks_slider_fx = $ks_slider_settings[fx] ? $ks_slider_settings[fx] : $options['transition_effect'];
-    $ks_slider_speed = $ks_slider_settings[speed] ? $ks_slider_settings[speed] : $options['transition_speed'];
-    $ks_slider_timeout = $ks_slider_settings[timeout] ? $ks_slider_settings[timeout] : $options['transition_timeout'];
-    $ks_slider_size = $ks_slider_settings[slide_size] ? $ks_slider_settings[slide_size] : $options['slide_size'];
-    $ks_slider_theme = $ks_slider_settings[theme] ? $ks_slider_settings[theme] : $options['theme'];
+    $ks_slider_fx = $ks_slider_settings['fx'] ? $ks_slider_settings['fx'] : $options['transition_effect'];
+    $ks_slider_speed = $ks_slider_settings['speed'] ? $ks_slider_settings['speed'] : $options['transition_speed'];
+    $ks_slider_timeout = $ks_slider_settings['timeout'] ? $ks_slider_settings['timeout'] : $options['transition_timeout'];
+    $ks_slider_size = isset($ks_slider_settings['slide_size']) ? $ks_slider_settings['slide_size'] : $options['slide_size'];
+    $ks_slider_theme = $ks_slider_settings['theme'] ? $ks_slider_settings['theme'] : $options['theme'];
 
     $ks_meta .= $inputs->select('ks_slider_settings[fx]', $ks_slider_fx, __('Effect', 'kwik'), null, $defaults['behavior']['settings']['transition_effect']['options']);
     $ks_meta .= $inputs->spinner('ks_slider_settings[speed]', $ks_slider_speed, __('Speed', 'kwik'), array('max' => '2000', 'min' => '0'));
@@ -55,13 +55,13 @@ function pager_settings()
     $ks_pager_settings = get_post_meta($post->ID, '_ks_pager_settings');
     $ks_pager_settings = $ks_pager_settings[0];
 
-    $ks_pager_style = $ks_pager_settings[style] ? $ks_pager_settings[style] : $options['pager_style'];
-    $ks_pager_speed = $ks_pager_settings[fx] ? $ks_pager_settings[fx] : $options['transition_fx'];
-    $ks_pager_position = $ks_pager_settings[position] ? $ks_pager_settings[position] : $options['pager_position'];
-    $ks_pager_size = $ks_pager_settings[pager_size] ? $ks_pager_settings[pager_size] : $options['pager_size'];
-    $ks_pager_spacing = $ks_pager_settings[pager_spacing] ? $ks_pager_settings[pager_spacing] : $options['pager_spacing'];
-    $ks_pager_color = $ks_pager_settings[pager_color] ? $ks_pager_settings[pager_color] : $options['pager_color'];
-    $ks_pager_color_active = $ks_pager_settings[pager_color_active] ? $ks_pager_settings[pager_color_active] : $options['pager_color_active'];
+    $ks_pager_style = $ks_pager_settings['style'] ? $ks_pager_settings['style'] : $options['pager_style'];
+    $ks_pager_speed = $ks_pager_settings['fx'] ? $ks_pager_settings['fx'] : $options['transition_fx'];
+    $ks_pager_position = $ks_pager_settings['position'] ? $ks_pager_settings['position'] : $options['pager_position'];
+    $ks_pager_size = $ks_pager_settings['pager_size'] ? $ks_pager_settings['pager_size'] : $options['pager_size'];
+    $ks_pager_spacing = $ks_pager_settings['pager_spacing'] ? $ks_pager_settings['pager_spacing'] : $options['pager_spacing'];
+    $ks_pager_color = $ks_pager_settings['pager_color'] ? $ks_pager_settings['pager_color'] : $options['pager_color'];
+    $ks_pager_color_active = $ks_pager_settings['pager_color_active'] ? $ks_pager_settings['pager_color_active'] : $options['pager_color_active'];
 
     $output .= $inputs->select('ks_pager_settings[style]', $ks_pager_style, __('Style', 'kwik'), null, $defaults['appearance']['settings']['pager_style']['options']);
     $output .= $inputs->select('ks_pager_settings[fx]', $ks_pager_speed, __('Effect', 'kwik'), null, $defaults['behavior']['settings']['transition_effect']['options']);
@@ -176,7 +176,7 @@ function save_ks_meta($post_id, $post)
             if ($post->post_type == 'revision') {
                 return;
             }
-            KwikUtils::update_meta($post->ID, $key, $value);
+            KwikMeta::update_meta($post->ID, $key, $value);
         }
         // } else {
         //   return;
