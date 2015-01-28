@@ -70,10 +70,9 @@
   border-right: 1px solid #999;
 }
 #ks_slide_meta .slide_edit .img_prev {
-  /*min-height: 229px;*/
-  height: auto;
   background: url("../images/no_image.gif") no-repeat 50% 46%;
   width: 100%;
+  height: 94px;
 }
 #ks_slide_meta .slide_edit .slide_details {
   float: right;

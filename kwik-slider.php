@@ -37,7 +37,7 @@ function ks_cpt_init()
         ),
         'menu_icon' => 'dashicons-slides',
         'menu_position' => 3,
-        'register_meta_box_cb' => 'add_ks_metaboxes',
+        'register_meta_box_cb' => 'add_ks_meta_boxes',
         'supports' => array(
             'title',
             // 'editor',
