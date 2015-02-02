@@ -28,18 +28,18 @@ function save_ks_slide($post)
     }
 
     $ks_slide_meta = array(
-        '_slide_subtitle' => $post[KS_PREFIX . 'slide_subtitle'],
-        '_slide_link' => $post[KS_PREFIX . 'slide_link'],
-        '_slide_learnmore' => $post[KS_PREFIX . 'slide_learnmore'],
+        '_slide_subtitle',
+        '_slide_link',
+        '_slide_learnmore'
     );
+
+    foreach ($ks_slide_meta as $meta) {
+      $ks_slide_meta[$meta] = isset($post['ks'.$meta]) ? $post['ks'.$meta] : '';
+    }
 
     // Add values of $ks_slide_meta as custom fields
     foreach ($ks_slide_meta as $key => $value) {
-        if ($post->post_type == 'revision') {
-            return;
-        }
-
-        KwikMeta::update_meta($post_id, $key, $value);
+      update_post_meta($post_id, $key, $value);
     }
 
     $json = array(

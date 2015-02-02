@@ -1,10 +1,9 @@
-#ks_js_utils_path{
-  display:none;
+#ks_js_utils_path {
+  display: none;
 }
 #ks_meta label {
   display: block;
 }
-
 #ks_slide_meta .slide_edit .clear_img {
   display: none;
   position: absolute;
@@ -51,13 +50,13 @@
 }
 #ks_slide_meta .slide_edit {
   position: relative;
-  padding:5px;
+  padding: 5px;
 }
 #ks_slide_meta .slide_edit .kf_img_wrap {
   float: left;
   width: 33%;
   position: relative;
-  margin-bottom:0;
+  margin-bottom: 0;
 }
 #ks_slide_meta .slide_edit .kf_img_wrap .upload_img {
   float: right;
@@ -91,11 +90,11 @@
   width: 33%;
 }
 /*----------TOOLBAR----------*/
-#ks_slide_meta .ks_slide_toolbar{
-    float:right;
-    width:auto;
-}
 
+#ks_slide_meta .ks_slide_toolbar {
+  float: right;
+  width: auto;
+}
 #ks_slide_meta .ks_slide_toolbar span {
   display: inline-block;
   float: left;
@@ -106,8 +105,8 @@
   border-radius: 0.1em;
   text-align: center;
   margin-left: 0.1em;
-  cursor:pointer;
-  background-color:#fff;
+  cursor: pointer;
+  background-color: #fff;
 }
 #ks_slide_meta .ks_slide_toolbar span.move_slide {
   line-height: .6em
@@ -118,22 +117,42 @@
 #ks_slide_meta .ks_slide_toolbar span.save_slide:hover {
   color: green;
 }
-
 #ks_slide_meta .slide_footer {
-  display:block;
-  float:right;
-  width:65%;
+  display: block;
+  float: right;
+  width: 65%;
 }
-
 #ks_slide_meta .slide_footer .slide_messages {
   /*display: none;*/
+
   box-sizing: border-box;
   overflow: hidden;
   padding-right: 10px;
-  text-align:center;
-  line-height:2em;
-  color:#006017;
+  text-align: center;
+  line-height: 2em;
+  color: #006017;
 }
 #ks_slide_meta .slide_footer .slide_messages.error {
-  color:#9C0000;
+  color: #9C0000;
+}
+
+.mce-toolbar .mce-dashicons-slides .mce-ico{
+  font-family: dashicons;
+  font-size: 2em;
+  width: 1em;
+}
+.mce-toolbar .mce-dashicons-slides .mce-ico:before{
+  content: "\f181";
+}
+
+
+.slider_behavior.kf_option .kf_multi_field > div, .pager_behavior.kf_option .kf_multi_field > div{
+  display:block;
+  float:none;
+}
+
+
+.pager_appearance .kf_multi_field .kf_multi_field{
+  display:block;
+  clear:left;
 }

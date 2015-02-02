@@ -15,7 +15,7 @@ function ks_load_widget() {
 class KS_Slider_Widget extends WP_Widget {
 
   function __construct() {
-    $widget_ops = array('classname' => 'slider_widget', 'description' => __('Kwik Sldiers for your sidebars'));
+    $widget_ops = array('classname' => 'slider_widget', 'description' => __('Kwik Sliders for your sidebars'));
     $control_ops = array('height' => 350, 'id_base' => 'kwik_slider' );
     parent::__construct('kwik_slider', __('Kwik Slider'), $widget_ops, $control_ops);
   }
