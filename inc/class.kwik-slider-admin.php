@@ -23,9 +23,9 @@ class KwikSliderAdmin extends KwikSlider
 
     public function ks_settings_init()
     {
-        $utils = new KwikUtils();
+        $kwik_settings = new KwikSettings();
         $defaultSettings = parent::ks_default_options();
-        $utils->settings_init(KS_PLUGIN_BASENAME, KS_PLUGIN_SETTINGS, $defaultSettings);
+        $kwik_settings->settings_init(KS_PLUGIN_BASENAME, KS_PLUGIN_SETTINGS, $defaultSettings);
     }
 
     public function kwik_slider_settings()
@@ -37,7 +37,7 @@ class KwikSliderAdmin extends KwikSlider
         echo $inputs->markup('p', __('Set the defaults to be used by the sliders. Here you can define transition effects, pagers and themes.', 'kwik'));
         echo '<form action="options.php" method="post">';
         settings_fields(KS_PLUGIN_SETTINGS);
-        echo KwikUtils::settings_sections(KS_PLUGIN_SETTINGS, $settings);
+        echo KwikSettings::settings_sections(KS_PLUGIN_SETTINGS, $settings);
         echo '</form>';
         echo '</div>';
     }
