@@ -1,11 +1,21 @@
 jQuery(document).ready(function($) {
-  'use strict' ;
+  'use strict';
 
   $('#ks_slide_meta').sortable({
     opacity: 0.9,
     handle: '.move_slide',
     cancel: 'input, textarea, select',
-    disable: 'input, textarea, select'
+    disable: 'input, textarea, select',
+    stop: function() {
+      var data = {
+        type: 'save',
+        action: 'save_ks_meta',
+        data: $('form#post').serialize()
+      };
+      $.post(window.ajaxurl, data, function() {
+        console.log('slide updated');
+      });
+    }
   });
 
   function ksSlideAutocomplete() {
@@ -102,13 +112,13 @@ jQuery(document).ready(function($) {
   });
 
   function saveKsSlide(elem) {
-    var slide = elem.parents('.slide_edit'),
+    var slide = elem.hasClass('slide_edit') ? elem : elem.parents('.slide_edit'),
       sliderID = {
         'name': $('#post_ID').attr('name'),
         'value': $('#post_ID').val()
       },
       fields = slide.find(':input').serializeArray(),
-      saveKsSlideUtil = $('#ks_slide_meta').attr('ks-location') + "/utils/saveKsSlide.php";
+      saveKsSlideUtil = $('#ks_slide_meta').attr('ks-location') + "/utils/save_ks_slide.php";
     fields.push(sliderID);
 
     $.post(saveKsSlideUtil, fields)
@@ -118,6 +128,8 @@ jQuery(document).ready(function($) {
       });
 
   }
+
+
 
 
 });

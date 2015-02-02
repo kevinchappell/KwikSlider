@@ -33,7 +33,7 @@
       $json['theme'] =        $slider_settings[theme];
       $json['slide_count'] =  sizeof($kwik_slides);
 
-      $json['thumbnail'] =    KS_MISC::get_slider_thumb($result->slider_id);
+      $json['thumbnail'] =    KwikSliderHelpers::get_slider_thumb($result->slider_id);
       $data[] = $json;
     }
 
