@@ -1,3 +1,5 @@
+// @todo refactor this to make use of ajaxUrl
+
 jQuery(document).ready(function($) {
   'use strict';
 

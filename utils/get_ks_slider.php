@@ -1,5 +1,7 @@
 <?php
 
+// @todo refactor this into proper Utils class
+
   define('WP_USE_THEMES', false);
   include($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
 
