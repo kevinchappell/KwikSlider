@@ -8,7 +8,7 @@ class KwikSliderMeta extends KwikSlider
     public function __construct()
     {
         add_action('save_post', array($this, 'save_ks_meta'), 1, 2);
-        add_action( 'wp_ajax_save_ks_meta', array($this, 'save_ks_meta') );
+        add_action('wp_ajax_save_ks_meta', array($this, 'save_ks_meta'));
     }
     // Add the kwik slider meta box
     public static function add_ks_meta_boxes()
@@ -52,8 +52,7 @@ class KwikSliderMeta extends KwikSlider
     {
         global $post;
         $inputs = new KwikInputs();
-        $kwik_slides = KwikMeta::get_meta_array($post->ID, '_ks_slides');
-
+        $kwik_slides = KwikMeta::get_meta_array($post->ID, 'ks_slides');
         $output = '';
         // Noncename for security check on data origin
         $output .= $inputs->nonce(KS_PLUGIN_BASENAME . '_nonce', wp_create_nonce(plugin_basename(__FILE__)));
@@ -140,7 +139,6 @@ class KwikSliderMeta extends KwikSlider
             }
 
             $slide_ids = $post[KS_PREFIX . 'slide_id'];
-
             //TODO add meta validation
             $ks_slides = array(
                 'ks_slides' => $slide_ids,
