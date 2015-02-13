@@ -1,20 +1,53 @@
 .ks_slide_info {
-  width:100%;
-  height:auto;
-  padding:1% 2%;
+  width:50%;
+  padding:50% 2%;
+  height:300%;
+  bottom:-90%;
+  background: -moz-radial-gradient(left, ellipse cover,  rgba(0,0,0,0.93) 0%, rgba(255,255,255,0) 70%); /* FF3.6+ */
+  background: -webkit-gradient(radial, left center, 0px, left center, 70%, color-stop(0%,rgba(0,0,0,0.93)), color-stop(70%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+  background: -webkit-radial-gradient(left, ellipse cover,  rgba(0,0,0,0.93) 0%,rgba(255,255,255,0) 70%); /* Chrome10+,Safari5.1+ */
+  background: -o-radial-gradient(left, ellipse cover,  rgba(0,0,0,0.93) 0%,rgba(255,255,255,0) 70%); /* Opera 12+ */
+  background: -ms-radial-gradient(left, ellipse cover,  rgba(0,0,0,0.93) 0%,rgba(255,255,255,0) 70%); /* IE10+ */
+  background: radial-gradient(ellipse at left,  rgba(0,0,0,0.93) 0%,rgba(255,255,255,0) 70%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ed000000', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+  /*
   background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.85)));
   background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 100%);
   background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 100%);
   background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 100%);
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 100%);
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#d9000000', GradientType=0);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#d9000000', GradientType=0);*/
 }
 
 
 .ks_slide_info h2{
   text-shadow: 1px 1px 3px #000000;
+  font-size:30px;
 }
+
+.ks_slide_info p{
+  font-size:24px;
+  width:85%;
+}
+
 .ks_slide_info, .ks_slide_info a{
   color:#fff;
+  text-decoration:none;
+}
+
+.ks_slide_info .learn_more{
+  pointer-events:auto;
+  text-shadow: 0 -1px 0 #666666;
+  color:#fff;
+  padding:5px 10px;
+  -webkit-border-radius: 3px 3px 3px;
+  border-radius: 3px 3px 3px;
+}
+.ks_slide_info .learn_more:hover{
+  -moz-box-shadow: 0 1px 3px 0 #000000;
+  -webkit-box-shadow: 0 1px 3px 0 #000000;
+  box-shadow: 0 1px 3px 0 #000000;
 }

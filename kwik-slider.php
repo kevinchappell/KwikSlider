@@ -72,13 +72,14 @@ function get_slide($slide_id, $i = 0)
     $link_val       = get_post_meta($slide->ID, '_slide_link', true);
     $img_val        = get_post_thumbnail_id($slide->ID);
     $title_val      = $slide->post_title;
+    $link_attrs     = array();
 
     $img = get_the_post_thumbnail($slide->ID, 'kwik_slider');
     if ($link_val['url']) {
         $link_attrs = array("href" => $link_val['url'], "target" => $link_val['target'], "title" => $title_val);
         $img = $inputs->markup('a', $img, $link_attrs);
         $link_attrs['class'] = 'full_slide_link';
-        $full_slide_link = $inputs->markup('a', null, $link_attrs);
+        // $full_slide_link = $inputs->markup('a', null, $link_attrs);
         unset($link_attrs['class']);
         $title_val = $inputs->markup('a', $title_val, $link_attrs);
     } else {
@@ -93,8 +94,13 @@ function get_slide($slide_id, $i = 0)
         $slide_info['subtitle'] = $inputs->markup('p', $subtitle_val);
     }
 
+    if ($learnmore_val !== '') {
+        $link_attrs['class'] = 'learn_more';
+        $slide_info['button'] = $inputs->markup('a', $learnmore_val, $link_attrs);
+    }
+
     $slide_contents = array(
-        'full_slide_link' => isset($full_slide_link) ? $full_slide_link : null,
+        // 'full_slide_link' => isset($full_slide_link) ? $full_slide_link : null,
         'img' => $img,
         'slide_info' => $inputs->markup('div', $slide_info, array('class' => 'ks_slide_info')),
     );
@@ -102,6 +108,24 @@ function get_slide($slide_id, $i = 0)
     $slide_wrap = $inputs->markup('div', $slide_contents, array("class" => array("ks_slide", "ks_slide_" . $i)));
 
     return $slide_wrap;
+}
+
+
+function slide_info_vals($slide_id)
+{
+    $inputs = new KwikInputs();
+    $button_val = get_post_meta($slide_id, '_slide_learnmore', true);
+    $link_val = get_post_meta($slide_id, '_slide_link', true);
+
+    $slide_info = array(
+        'title' => get_the_title(),
+        'subtitle' => get_post_meta($slide_id, '_slide_subtitle', true),
+        'link' => $link_val,
+        'button' => $button_val !== '' ? $inputs->markup('a', $button_val) : null,
+        'img' => get_the_post_thumbnail($slide_id, 'kwik_slider')
+    );
+
+    return $slide_info;
 }
 
 function format_slider_settings($slider_settings, $slider_id)
@@ -177,6 +201,14 @@ function slider_style($slides, $settings)
     $output .= '.ks_pager .cycle-pager-active{';
     $output .= 'background-color: ' . $settings['pager']['pager_color_active'] . ';';
     $output .= '}';
+    $output .= '.ks_slide_info .learn_more{';
+    $output .= 'background-color: ' . $settings['pager']['pager_color'] . ';';
+    $output .= '}';
+    $output .= '.ks_slide_info .learn_more:hover{';
+    $output .= 'background-color: ' . $settings['pager']['pager_color_active'] . ';';
+    $output .= '}';
+
+
 
     foreach ($slides as $i => $v) {
         $output .= '.slide-index-' . $i . '{';
