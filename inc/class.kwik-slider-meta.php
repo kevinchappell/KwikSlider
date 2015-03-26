@@ -5,7 +5,7 @@ class KwikSliderMeta extends KwikSlider {
 	 * Main constructor
 	 */
 	public function __construct() {
-		add_action('save_post_faqs', array($this, 'save_ks_meta'), 1, 2);
+		add_action('save_post_kwik_slider', array($this, 'save_ks_meta'), 1, 2);
 		add_action('wp_ajax_save_ks_meta', array($this, 'save_ks_meta_ajax'));
 	}
 	// Add the kwik slider meta box
@@ -134,7 +134,7 @@ class KwikSliderMeta extends KwikSlider {
 
 		// Add values of $ks_slides as custom fields
 		foreach ($ks_slides as $key => $value) {
-			KwikMeta::update_meta($post['post_ID'], $key, $value);
+			KwikMeta::update_meta($post->ID, $key, $value);
 		}
 	}
 
@@ -142,7 +142,6 @@ class KwikSliderMeta extends KwikSlider {
 	public function save_ks_meta_ajax($post_id) {
 
 		$post = $_POST;
-var_dump($post['data']);
 		// Checks if this is an AJAX save
 		if (isset($post['data']) && 'kwik_slider' === $post['data']['post_type']) {
 			parse_str($post['data'], $post);
