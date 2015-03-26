@@ -79,8 +79,8 @@ class KwikSlider
             'exclude_from_search' => true,
             'has_archive' => false,
         ));
-        if (isset($settings['slide_size'])) {
-            $slide_size = $settings['slide_size'];
+        if (isset($settings['slider_appearance']['slide_size'])) {
+            $slide_size = $settings['slider_appearance']['slide_size'];
             $cropped = isset($slide_size['cropped']) ? true : false;
             add_image_size('kwik_slider', $slide_size['width'], $slide_size['height'], $cropped);
         }
@@ -109,7 +109,8 @@ class KwikSlider
 
         wp_enqueue_script('jquery-cycle', 'http://malsup.github.io/min/jquery.cycle2.min.js', array('jquery'));
         // wp_enqueue_script('jquery-cycle', KS_PLUGIN_URL . '/js/jquery-cycle2.js', array('jquery'));
-        wp_enqueue_style('ks-main-css', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'main.css', false, '2014-10-28');
+        wp_enqueue_script('ks-main', KS_PLUGIN_URL . '/js/' . KS_PLUGIN_BASENAME . '.js', array('jquery-cycle'));
+        wp_enqueue_style('ks-main', KS_PLUGIN_URL . '/css/' . KS_PREFIX . 'main.css', false, '2014-10-28');
 
     }
 

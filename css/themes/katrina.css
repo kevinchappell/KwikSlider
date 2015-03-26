@@ -40,14 +40,15 @@
 
 .ks_slide_info .learn_more{
   pointer-events:auto;
-  text-shadow: 0 -1px 0 #666666;
+  /*text-shadow: 0 -1px 0 #666666;*/
   color:#fff;
   padding:5px 10px;
-  -webkit-border-radius: 3px 3px 3px;
-  border-radius: 3px 3px 3px;
+/*  -webkit-border-radius: 3px 3px 3px;
+  border-radius: 3px 3px 3px;*/
 }
 .ks_slide_info .learn_more:hover{
-  -moz-box-shadow: 0 1px 3px 0 #000000;
+
+/*  -moz-box-shadow: 0 1px 3px 0 #000000;
   -webkit-box-shadow: 0 1px 3px 0 #000000;
-  box-shadow: 0 1px 3px 0 #000000;
+  box-shadow: 0 1px 3px 0 #000000;*/
 }

@@ -1,7 +1,7 @@
-.ks_slider_wrap{
+.ks-slider-wrap{
   position:relative;
 }
-.ks_slider{
+.ks-slider{
   line-height: 0;
 }
 .ks_slide_info{
@@ -38,18 +38,15 @@
 }
 
 
-.ks_pager{
+.ks-pager{
   width:500px;
   position:absolute;
   z-index:500;
 }
 
-.ks_pager .slide-index{
+.ks-pager .slide-index{
   display:inline-block;
 }
-
-
-
 
 
 /* Clearing floats */
