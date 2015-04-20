@@ -123,7 +123,8 @@ class KwikSlider
     {
         $themes = array(
             'katrina' => 'Katrina',
-            // 'kevin' => 'Kevin',
+            'kevin' => 'Kevin',
+            'openpower' => 'OpenPOWER',
         );
 
         $pagers = array(

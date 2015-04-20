@@ -127,11 +127,12 @@ function format_slider_settings($slider_settings, $slider_id) {
 
 	$slider_attrs['data-cycle-speed'] = $slider_settings['slider']['slider_speed'];
 	$slider_attrs['data-cycle-timeout'] = $slider_settings['slider']['slider_timeout'];
-	$slider_attrs['data-cycle-effect'] = $slider_settings['slider']['slider_effect'];
+	$slider_attrs['data-cycle-fx'] = $slider_settings['slider']['slider_effect'];
 	$slider_attrs['data-cycle-slides'] = '.ks_slide';
 	$slider_attrs['data-cycle-pager'] = '#ks-pager-' . $slider_id;
 	$slider_attrs['data-cycle-pager-template'] = '';
 	$slider_attrs['data-cycle-log'] = 'false';
+	$slider_attrs['data-cycle-auto-height'] = 'container';
 
 	$slider_attrs['class'] = array(
 		'ks-slider',
@@ -169,9 +170,23 @@ function slider_style($slides, $settings) {
 	$output .= '}';
 
 	$output .= '.ks-slider{';
-	if (!empty($settings['slider']['slide_size'])) {
+	if (!empty($settings['slider']['width'])) {
 		$output .= 'width: ' . $settings['slider']['width'] . 'px;';
-		$output .= 'height: ' . $settings['slider']['height'] . 'px;';
+		if (!empty($settings['slider']['height'])) {
+			$output .= 'height: ' . $settings['slider']['height'] . 'px;';
+		} else {
+			$output .= 'min-height: 230px;';
+		}
+	}
+	$output .= '}';
+
+	$output .= '.ks_slide{';
+	if (!empty($settings['slider']['width'])) {
+		$output .= 'width: ' . $settings['slider']['width'] . 'px;';
+		if (!empty($settings['slider']['height'])) {
+			$output .= 'height: ' . $settings['slider']['height'] . 'px;';
+		}
+		$output .= 'min-height: 230px;';
 	}
 	$output .= '}';
 

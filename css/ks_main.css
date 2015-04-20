@@ -1,5 +1,6 @@
 .ks-slider-wrap{
   position:relative;
+  overflow:hidden;
 }
 .ks-slider{
   line-height: 0;
@@ -12,9 +13,9 @@
 }
 
 .ks_slide{
-  position:absolute;
+/*  position:absolute;
   left:0;
-  bottom:0;
+  bottom:0;*/
 }
 .ks_slide img{
   width:100%;
