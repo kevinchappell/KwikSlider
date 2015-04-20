@@ -1,0 +1,15 @@
+.ks_slide_info {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  height: 100%;
+  z-index: 1;
+  width: 42%;
+}
+.ks_slide_info h2 a {
+  color:#000000;
+}
+.ks_slide img{
+	width:100% !important;
+	height:auto;
+}
